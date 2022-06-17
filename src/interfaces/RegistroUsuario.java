@@ -271,6 +271,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
             psd.setString(4, FEC_USU);
             psd.setString(5, DIR_USU);
             psd.setString(6, TEL_USU);
+            //
 
             int n = psd.executeUpdate();
 
