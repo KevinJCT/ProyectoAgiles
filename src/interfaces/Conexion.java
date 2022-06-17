@@ -16,7 +16,8 @@ import javax.swing.JOptionPane;
  * @author USUARIO
  */
 public class Conexion {
-     Connection con;
+
+    Connection con;
     public ResultSet resultado;
     public Statement sentencia;
 
@@ -25,7 +26,7 @@ public class Conexion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/iniciarsesion", "root", "");
+                    "jdbc:mysql://localhost/agiles", "root", "");
             sentencia = con.createStatement();
 
             //System.out.println("Conexion Exitosa");
@@ -36,5 +37,5 @@ public class Conexion {
         return con;
 
     }
-    
+
 }
