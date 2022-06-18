@@ -27,6 +27,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
      */
     public RegistroUsuario() {
         initComponents();
+        //bloquearBotones();
     }
 
     /**
@@ -45,15 +46,15 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jtxtCedula = new javax.swing.JTextField();
         jtxtNombre = new javax.swing.JTextField();
         jtxtApellido = new javax.swing.JTextField();
         jtxtDireccion = new javax.swing.JTextField();
-        jtxtTelefono = new javax.swing.JTextField();
         jbtnAceptar = new javax.swing.JButton();
         jDateFecha = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
         jpsdContraseña = new javax.swing.JPasswordField();
+        jtxtTelefono = new componentespropios.jtxtSoloNumeritos();
+        jtxtCedula = new componentespropios.jtxtSoloNumeritos();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +83,12 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
         jLabel8.setText("Contraseña");
 
+        jpsdContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jpsdContraseñaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,26 +111,26 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jDateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 312, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jbtnAceptar, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(40, 40, 40)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                                    .addComponent(jbtnAceptar)
+                                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(29, 29, 29)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jtxtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                                    .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING))))
-                        .addContainerGap(121, Short.MAX_VALUE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jtxtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                                .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addContainerGap(132, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,8 +139,8 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -153,9 +160,9 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jbtnAceptar)
                 .addContainerGap(60, Short.MAX_VALUE))
@@ -168,7 +175,15 @@ public class RegistroUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         validadorDeCedula(jtxtCedula.getText());
+
+
     }//GEN-LAST:event_jbtnAceptarActionPerformed
+
+    private void jpsdContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpsdContraseñaActionPerformed
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_jpsdContraseñaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,6 +220,14 @@ public class RegistroUsuario extends javax.swing.JFrame {
         });
     }
 
+    public void bloquearBotones() {
+        jbtnAceptar.setEnabled(false);
+    }
+
+    public void DesbloquearBotones() {
+        jbtnAceptar.setEnabled(true);
+    }
+
     public boolean validadorDeCedula(String cedula) {
         boolean cedulaCorrecta = false;
 
@@ -230,6 +253,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                     } else if ((10 - (suma % 10)) == verificador) {
                         cedulaCorrecta = true;
                         GuardarRegistro();
+
                     } else {
                         cedulaCorrecta = false;
                     }
@@ -271,8 +295,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
             FEC_USU = (((JTextField) jDateFecha.getDateEditor().getUiComponent()).getText());
 
             DIR_USU = jtxtDireccion.getText();
+
             TEL_USU = jtxtTelefono.getText();
+
             CON_USU = jpsdContraseña.getText();
+            // DesbloquearBotones();
 
             PreparedStatement psd = cc.prepareStatement(sql);
             psd.setString(1, CED_USU);
@@ -310,9 +337,9 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jbtnAceptar;
     private javax.swing.JPasswordField jpsdContraseña;
     private javax.swing.JTextField jtxtApellido;
-    private javax.swing.JTextField jtxtCedula;
+    private componentespropios.jtxtSoloNumeritos jtxtCedula;
     private javax.swing.JTextField jtxtDireccion;
     private javax.swing.JTextField jtxtNombre;
-    private javax.swing.JTextField jtxtTelefono;
+    private componentespropios.jtxtSoloNumeritos jtxtTelefono;
     // End of variables declaration//GEN-END:variables
 }

@@ -47,32 +47,32 @@
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jDateFecha" min="-2" pref="111" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="312" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" pref="73" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jtxtTelefono" alignment="0" pref="86" max="32767" attributes="0"/>
-                                  <Component id="jtxtDireccion" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jtxtDireccion" alignment="0" pref="86" max="32767" attributes="0"/>
                                   <Component id="jbtnAceptar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jtxtTelefono" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                               <Component id="jLabel8" min="-2" pref="76" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jpsdContraseña" min="-2" pref="96" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="jtxtCedula" min="-2" pref="87" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jtxtNombre" alignment="0" pref="87" max="32767" attributes="0"/>
-                                  <Component id="jtxtApellido" alignment="0" max="32767" attributes="0"/>
-                              </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jtxtNombre" alignment="0" pref="87" max="32767" attributes="0"/>
+                              <Component id="jtxtApellido" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="121" max="32767" attributes="0"/>
+                      <EmptySpace pref="132" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jtxtCedula" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="jDateFecha" min="-2" pref="111" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -85,8 +85,8 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jtxtCedula" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtxtCedula" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -111,9 +111,9 @@
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jtxtTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel8" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jpsdContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtxtTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jbtnAceptar" min="-2" max="-2" attributes="0"/>
@@ -158,15 +158,11 @@
         <Property name="text" type="java.lang.String" value="Telefono"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jtxtCedula">
-    </Component>
     <Component class="javax.swing.JTextField" name="jtxtNombre">
     </Component>
     <Component class="javax.swing.JTextField" name="jtxtApellido">
     </Component>
     <Component class="javax.swing.JTextField" name="jtxtDireccion">
-    </Component>
-    <Component class="javax.swing.JTextField" name="jtxtTelefono">
     </Component>
     <Component class="javax.swing.JButton" name="jbtnAceptar">
       <Properties>
@@ -187,6 +183,13 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="jpsdContrase&#xf1;a">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jpsdContrase&#xf1;aActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="componentespropios.jtxtSoloNumeritos" name="jtxtTelefono">
+    </Component>
+    <Component class="componentespropios.jtxtSoloNumeritos" name="jtxtCedula">
     </Component>
   </SubComponents>
 </Form>
