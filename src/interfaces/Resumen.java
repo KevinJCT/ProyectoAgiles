@@ -5,6 +5,17 @@
  */
 package interfaces;
 
+import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JRViewer;
+
 /**
  *
  * @author USER1
@@ -16,6 +27,8 @@ public class Resumen extends javax.swing.JFrame {
      */
     public Resumen() {
         initComponents();
+        setLocationRelativeTo(this);
+        mostrarTrabajador();
     }
 
     /**
@@ -27,21 +40,109 @@ public class Resumen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jpnlTrabajador = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jbtnContratar = new javax.swing.JButton();
+        jbtnPreguntar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jpnlTrabajadorLayout = new javax.swing.GroupLayout(jpnlTrabajador);
+        jpnlTrabajador.setLayout(jpnlTrabajadorLayout);
+        jpnlTrabajadorLayout.setHorizontalGroup(
+            jpnlTrabajadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jpnlTrabajadorLayout.setVerticalGroup(
+            jpnlTrabajadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 308, Short.MAX_VALUE)
+        );
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setText("TRABAJADOR");
+
+        jbtnContratar.setText("Contratar");
+        jbtnContratar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnContratarActionPerformed(evt);
+            }
+        });
+
+        jbtnPreguntar.setText("Preguntar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jpnlTrabajador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbtnContratar)
+                        .addGap(47, 47, 47)
+                        .addComponent(jbtnPreguntar)))
+                .addContainerGap(593, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnContratar)
+                    .addComponent(jbtnPreguntar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpnlTrabajador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void mostrarTrabajador() {
+        try {
+            Conexion cn = new Conexion();
+            String path = ("C://reportes/reporteTrabajador.jasper");
+
+            JasperReport report = (JasperReport) JRLoader.loadObject(path);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, null, cn.conectar());
+            //se crea el visor con el reporte
+            JRViewer jRViewer = new JRViewer(jasperPrint);
+            //se elimina elementos del contenedor JPanel
+            jpnlTrabajador.removeAll();
+            //para el tamaño del reporte se agrega un BorderLayout
+            jpnlTrabajador.setLayout(new BorderLayout());
+            jpnlTrabajador.add(jRViewer, BorderLayout.CENTER);
+            jRViewer.setVisible(true);
+            jpnlTrabajador.repaint();
+            jpnlTrabajador.revalidate();
+        } catch (JRException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+    
+    private void jbtnContratarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnContratarActionPerformed
+        if (JOptionPane.showConfirmDialog(new JInternalFrame(), "Esta seguro de contrar los servicios",
+                "Borrar registro", JOptionPane.WARNING_MESSAGE,
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            try {
+                Conexion cn = new Conexion();
+                Connection c = cn.conectar();
+
+                String sql = "INSERT INTO registro_contrato(IDE_CON,PRE_CON,EST_CON,CAL_CON,FEC_INI,FEC_FIN,CED_TRA_CON,CED_USU_CON) VALUES(?,?,?,?,?,?,?,?)";
+                PreparedStatement psd = c.prepareStatement(sql);
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Se contrato el servicio");
+                }
+            } catch (Exception e) {
+
+            }
+        }
+    }//GEN-LAST:event_jbtnContratarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +180,9 @@ public class Resumen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jbtnContratar;
+    private javax.swing.JButton jbtnPreguntar;
+    private javax.swing.JPanel jpnlTrabajador;
     // End of variables declaration//GEN-END:variables
 }
