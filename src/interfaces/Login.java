@@ -55,6 +55,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton2.setText("Registrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Contraseña");
 
@@ -106,16 +111,25 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Inicarsesion();
     }//GEN-LAST:event_jButton1ActionPerformed
-    public void inicarsesio() {
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+
+        RegistroUsuario r = new RegistroUsuario();
+        r.setVisible(true);
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+    public void Inicarsesion() {
 
         try {
-            String emp_usuario, emp_contraseña;
-            emp_usuario = jtxtUsuario.getText();
-            emp_contraseña = jpsdContraseña.getText();
+            String CED_USU, CON_USU;
+            CED_USU = jtxtUsuario.getText();
+            CON_USU = jpsdContraseña.getText();
             Conexion cn = new Conexion();
             Connection cc = cn.conectar();
-            String sql = "SELECT   emp_cedula, emp_usuario from login WHERE emp_usuario='" + emp_usuario + "'AND emp_contraseña='" + emp_contraseña + "'";
+            String sql = "SELECT   CED_USU from usuario WHERE CED_USU='" + CED_USU + "'AND CON_USU='" + CON_USU + "'";
             cn.resultado = cn.sentencia.executeQuery(sql);
 
             if (cn.resultado.next()) {
@@ -123,6 +137,9 @@ public class Login extends javax.swing.JFrame {
                 //JEFE j = new JEFE();
                 //j.lbusuario.setText("Bienevidos:" + cn.resultado.getString("emp_usuario"));
                 //j.setVisible(true);
+                Resumen r = new Resumen();
+
+                r.setVisible(true);
 
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario y contraseña invalidos");
