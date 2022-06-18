@@ -190,6 +190,9 @@
     <Component class="componentespropios.jtxtSoloNumeritos" name="jtxtTelefono">
     </Component>
     <Component class="componentespropios.jtxtSoloNumeritos" name="jtxtCedula">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

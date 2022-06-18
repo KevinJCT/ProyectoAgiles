@@ -337,7 +337,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jbtnAceptar;
     private javax.swing.JPasswordField jpsdContraseña;
     private javax.swing.JTextField jtxtApellido;
-    private componentespropios.jtxtSoloNumeritos jtxtCedula;
+    public componentespropios.jtxtSoloNumeritos jtxtCedula;
     private javax.swing.JTextField jtxtDireccion;
     private javax.swing.JTextField jtxtNombre;
     private componentespropios.jtxtSoloNumeritos jtxtTelefono;
