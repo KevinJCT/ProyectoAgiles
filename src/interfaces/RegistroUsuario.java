@@ -53,7 +53,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jbtnAceptar = new javax.swing.JButton();
         jDateFecha = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jpsdContraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,7 +117,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                                 .addGap(40, 40, 40)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -155,7 +155,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jbtnAceptar)
                 .addContainerGap(60, Short.MAX_VALUE))
@@ -257,13 +257,13 @@ public class RegistroUsuario extends javax.swing.JFrame {
     public void GuardarRegistro() {
 
         try {
-            String CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU;
+            String CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU;
 
             Conexion cn = new Conexion();
             Connection cc = cn.conectar();
 
-            String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU) "
-                    + "values (?,?,?,?,?,?)";
+            String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU) "
+                    + "values (?,?,?,?,?,?,?)";
             CED_USU = jtxtCedula.getText();
             NOM_USU = jtxtNombre.getText();
             APE_USU = jtxtApellido.getText();
@@ -272,6 +272,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
             DIR_USU = jtxtDireccion.getText();
             TEL_USU = jtxtTelefono.getText();
+            CON_USU = jpsdContraseña.getText();
 
             PreparedStatement psd = cc.prepareStatement(sql);
             psd.setString(1, CED_USU);
@@ -280,6 +281,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
             psd.setString(4, FEC_USU);
             psd.setString(5, DIR_USU);
             psd.setString(6, TEL_USU);
+            psd.setString(7, CON_USU);
             //
 
             int n = psd.executeUpdate();
@@ -305,8 +307,8 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JButton jbtnAceptar;
+    private javax.swing.JPasswordField jpsdContraseña;
     private javax.swing.JTextField jtxtApellido;
     private javax.swing.JTextField jtxtCedula;
     private javax.swing.JTextField jtxtDireccion;
