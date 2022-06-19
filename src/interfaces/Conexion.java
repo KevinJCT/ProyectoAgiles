@@ -26,9 +26,10 @@ public class Conexion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/agiles", "root", "");
+                    "jdbc:mysql://localhost/bdagiles", "root", "");
             sentencia = con.createStatement();
 
+            System.out.println("conexion correcta");
             //System.out.println("Conexion Exitosa");
         } catch (Exception ex) {
             //System.out.println(e);

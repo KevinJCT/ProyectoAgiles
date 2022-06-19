@@ -5,6 +5,15 @@
  */
 package interfaces;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +34,40 @@ public class Busqueda extends javax.swing.JFrame {
         initComponents();
         cargarTabla();
         bloquearBusqueda();
+
+    }
+
+    public boolean cargarProfesional() {
+
+        try {
+            ArrayList<String> habilidades = new ArrayList<>();
+            modeloProfesional = new DefaultComboBoxModel();
+            Conexion cc = new Conexion();
+            Connection cn = cc.conectar();
+
+            String sql = "Select HAB_TRA from habilidades";
+            Statement psd = cn.createStatement();
+
+            ResultSet rs = psd.executeQuery(sql);
+
+            while (rs.next()) {
+                habilidades.add(rs.getString("HAB_TRA"));
+            }
+
+            Set<String> hashSet = new HashSet<String>(habilidades);
+            habilidades.clear();
+            habilidades.addAll(hashSet);
+//            System.out.println(habilidades.size());
+            for (String habilidad : habilidades) {
+                System.out.println("Paso");
+                modeloProfesional.addElement(habilidad);
+            }
+            jcbxProfesional.setModel(modeloProfesional);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 
     public boolean cargarTabla() {
@@ -237,6 +280,7 @@ public class Busqueda extends javax.swing.JFrame {
     private void jbtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNuevoActionPerformed
         // TODO add your handling code here:
         desbloquearBusqueda();
+        cargarProfesional();
     }//GEN-LAST:event_jbtnNuevoActionPerformed
 
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
