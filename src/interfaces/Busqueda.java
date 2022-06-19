@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,11 +31,12 @@ public class Busqueda extends javax.swing.JFrame {
     DefaultTableModel modeloT;
     DefaultComboBoxModel modeloProfesional;
     DefaultComboBoxModel modeloCiudad;
+    SpinnerListModel modeloSpinnerCantidad;
 
     public Busqueda() {
         initComponents();
-        cargarTabla();
         bloquearBusqueda();
+        cargarSpinner();
 
     }
 
@@ -103,6 +105,7 @@ public class Busqueda extends javax.swing.JFrame {
         }
         return true;
     }
+    
 
     public void cargarBusqueda(String habilidad, String ciudad) {
         try {
@@ -111,6 +114,10 @@ public class Busqueda extends javax.swing.JFrame {
             Connection cc = cn.conectar();
 
             String[] registro = new String[modeloT.getColumnCount()];
+            for(int i =0;i<modeloT.getRowCount();i++){
+                modeloT.removeRow(i);
+            }
+            
 
             String sqlSelect;
             sqlSelect = "SELECT * FROM trabajador WHERE CED_TRA IN (SELECT CED_TRA_PER FROM habilidades WHERE HAB_TRA = '" + habilidad + "') AND NAC_TRA = (SELECT IDE_CIU FROM ciudad WHERE NOM_CIU = '" + ciudad + "')";
@@ -156,6 +163,17 @@ public class Busqueda extends javax.swing.JFrame {
             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+     private void cargarSpinner() {
+        String[] cantidad = new String[10];
+        Integer x = 1;
+        for (int i = 0; i < 10; i++) {
+            cantidad[i] = x.toString();
+            x += 1;
+        }
+        modeloSpinnerCantidad = new SpinnerListModel(cantidad);
+        jSpinner1.setModel(modeloSpinnerCantidad);
     }
 
     public boolean bloquearBusqueda() {
@@ -301,7 +319,7 @@ public class Busqueda extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtbl1);
 
-        jLabel3.setText("UUSUARIO: ");
+        jLabel3.setText("USUARIO: ");
 
         jbtnCalificar.setText("Calificar");
 
@@ -311,7 +329,7 @@ public class Busqueda extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnCalificar)
                 .addContainerGap())
@@ -370,6 +388,7 @@ public class Busqueda extends javax.swing.JFrame {
         desbloquearBusqueda();
         cargarProfesional();
         CargarCuidad();
+        cargarTabla();
     }//GEN-LAST:event_jbtnNuevoActionPerformed
 
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed

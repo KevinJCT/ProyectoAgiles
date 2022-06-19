@@ -18,21 +18,15 @@ import javax.swing.JOptionPane;
 public class Conexion {
 
     Connection con;
-    public ResultSet resultado;
-    public Statement sentencia;
 
     public Connection conectar() {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/bdagiles", "root", "");
-            sentencia = con.createStatement();
-
-            System.out.println("conexion correcta");
-            //System.out.println("Conexion Exitosa");
+            //con = DriverManager.getConnection("jdbc:mysql://localhost/bdagiles", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/metodologias", "root", "");
+            
         } catch (Exception ex) {
-            //System.out.println(e);
             JOptionPane.showMessageDialog(null, ex);
         }
         return con;
