@@ -8,13 +8,13 @@ package interfaces;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JRViewer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,10 +25,14 @@ public class Resumen extends javax.swing.JFrame {
     /**
      * Creates new form Resumen
      */
+    public static DefaultTableModel modelo;
+    int fila = Integer.parseInt(Busqueda.jlblFila.getText());
+    String CED_TRA = Busqueda.jtbl1.getValueAt(fila, 0).toString();
+
     public Resumen() {
         initComponents();
         setLocationRelativeTo(this);
-        mostrarTrabajador();
+        cargarTabla();
     }
 
     /**
@@ -40,26 +44,21 @@ public class Resumen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpnlTrabajador = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jbtnContratar = new javax.swing.JButton();
         jbtnPreguntar = new javax.swing.JButton();
+        jlblDato = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtblTrabajador = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        jlblFila2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jpnlTrabajadorLayout = new javax.swing.GroupLayout(jpnlTrabajador);
-        jpnlTrabajador.setLayout(jpnlTrabajadorLayout);
-        jpnlTrabajadorLayout.setHorizontalGroup(
-            jpnlTrabajadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jpnlTrabajadorLayout.setVerticalGroup(
-            jpnlTrabajadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
-        );
-
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("TRABAJADOR");
+        jLabel1.setText("TRABAJADOR:");
 
         jbtnContratar.setText("Contratar");
         jbtnContratar.addActionListener(new java.awt.event.ActionListener() {
@@ -70,60 +69,108 @@ public class Resumen extends javax.swing.JFrame {
 
         jbtnPreguntar.setText("Preguntar");
 
+        jlblDato.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+
+        jtblTrabajador.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jtblTrabajador);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        jLabel3.setText("Pregunta:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpnlTrabajador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbtnContratar)
-                        .addGap(47, 47, 47)
-                        .addComponent(jbtnPreguntar)))
-                .addContainerGap(593, Short.MAX_VALUE))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnPreguntar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jlblDato, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlblFila2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jbtnContratar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnContratar)
-                    .addComponent(jbtnPreguntar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpnlTrabajador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jlblDato, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlblFila2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtnContratar))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbtnPreguntar)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void mostrarTrabajador() {
+    public void cargarTabla() {
         try {
-            Conexion cn = new Conexion();
-            String path = ("C://reportes/reporteTrabajador.jasper");
+            String[] titulos = {"Nombre", "Apellido", "Direccion", "Telefono", "Nacionalidad"};
+            String[] registros = new String[5];
 
-            JasperReport report = (JasperReport) JRLoader.loadObject(path);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(report, null, cn.conectar());
-            //se crea el visor con el reporte
-            JRViewer jRViewer = new JRViewer(jasperPrint);
-            //se elimina elementos del contenedor JPanel
-            jpnlTrabajador.removeAll();
-            //para el tamaño del reporte se agrega un BorderLayout
-            jpnlTrabajador.setLayout(new BorderLayout());
-            jpnlTrabajador.add(jRViewer, BorderLayout.CENTER);
-            jRViewer.setVisible(true);
-            jpnlTrabajador.repaint();
-            jpnlTrabajador.revalidate();
-        } catch (JRException ex) {
-            System.err.println(ex.getMessage());
+            modelo = new DefaultTableModel(null, titulos);
+
+            Conexion cn = new Conexion();
+            Connection c = cn.conectar();
+
+            String sql = "SELECT * FROM TRABAJADOR WHERE CED_TRA='" + CED_TRA + "'";
+
+            Statement psd = c.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("NOM_TRA");
+                registros[1] = rs.getString("APE_TRA");
+                registros[2] = rs.getString("DIR_TRA");
+                registros[3] = rs.getString("TEL1_TRA");
+                registros[4] = rs.getString("NAC_TRA");
+                modelo.addRow(registros);
+            }
+            jtblTrabajador.setModel(modelo);
+        } catch (Exception e) {
         }
     }
-    
+
     private void jbtnContratarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnContratarActionPerformed
         if (JOptionPane.showConfirmDialog(new JInternalFrame(), "Esta seguro de contrar los servicios",
                 "Borrar registro", JOptionPane.WARNING_MESSAGE,
@@ -181,8 +228,14 @@ public class Resumen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbtnContratar;
     private javax.swing.JButton jbtnPreguntar;
-    private javax.swing.JPanel jpnlTrabajador;
+    public static javax.swing.JLabel jlblDato;
+    public static javax.swing.JLabel jlblFila2;
+    private javax.swing.JTable jtblTrabajador;
     // End of variables declaration//GEN-END:variables
 }
