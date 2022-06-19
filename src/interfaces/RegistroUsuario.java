@@ -54,6 +54,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jpsdContraseña = new javax.swing.JPasswordField();
         jtxtSoloNumeritos1 = new componentePropio.jtxtSoloNumeritos();
+        jtxtSoloNumeritos2 = new componentePropio.jtxtSoloNumeritos();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,19 +116,20 @@ public class RegistroUsuario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jbtnAceptar))
-                                .addGap(29, 29, 29)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jtxtSoloNumeritos1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jtxtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                                .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addContainerGap(132, Short.MAX_VALUE))))
+                                .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                                    .addComponent(jbtnAceptar)
+                                    .addComponent(jtxtSoloNumeritos2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(135, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +160,8 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtSoloNumeritos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jbtnAceptar)
                 .addContainerGap(54, Short.MAX_VALUE))
@@ -336,5 +339,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtDireccion;
     private javax.swing.JTextField jtxtNombre;
     private componentePropio.jtxtSoloNumeritos jtxtSoloNumeritos1;
+    private componentePropio.jtxtSoloNumeritos jtxtSoloNumeritos2;
     // End of variables declaration//GEN-END:variables
 }
