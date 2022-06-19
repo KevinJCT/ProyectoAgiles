@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -77,7 +78,84 @@ public class Busqueda extends javax.swing.JFrame {
         for (int i = 0; i < titulos.length; i++) {
             jtbl1.getColumnModel().getColumn(i).setResizable(false);
         }
+
+        try {
+
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+
+            String[] registro = new String[modeloT.getColumnCount()];
+
+            String sqlSelect;
+            sqlSelect = "SELECT * FROM trabajador";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sqlSelect);
+            while (rs.next()) {
+                registro[0] = rs.getString("NOM_TRA");
+                registro[1] = rs.getString("TEL1_TRA");
+                registro[2] = rs.getString("CAN_TRA");
+                registro[3] = rs.getString("CAL_TRA");
+                modeloT.addRow(registro);
+            }
+            jtbl1.setModel(modeloT);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
         return true;
+    }
+
+    public void cargarBusqueda(String habilidad, String ciudad) {
+        try {
+
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+
+            String[] registro = new String[modeloT.getColumnCount()];
+
+            String sqlSelect;
+            sqlSelect = "SELECT * FROM trabajador WHERE CED_TRA IN (SELECT CED_TRA_PER FROM habilidades WHERE HAB_TRA = '" + habilidad + "') AND NAC_TRA = (SELECT IDE_CIU FROM ciudad WHERE NOM_CIU = '" + ciudad + "')";
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sqlSelect);
+            while (rs.next()) {
+                registro[0] = rs.getString("NOM_TRA");
+                registro[1] = rs.getString("TEL1_TRA");
+                registro[2] = rs.getString("CAN_TRA");
+                registro[3] = rs.getString("CAL_TRA");
+                modeloT.addRow(registro);
+            }
+            jtbl1.setModel(modeloT);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void CargarCuidad() {
+        try {
+
+            ArrayList<String> ciudades = new ArrayList<>();
+            modeloCiudad = new DefaultComboBoxModel();
+            Conexion cc = new Conexion();
+            Connection cn = cc.conectar();
+            String sql = "";
+            sql = "select NOM_CIU from ciudad";
+            Statement psd = cn.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                ciudades.add(rs.getString("NOM_CIU"));
+            }
+            System.out.println(ciudades.size());
+            for (String i : ciudades) {
+                modeloCiudad.addElement(i);
+
+            }
+            //ciudad.addElement(ciudades);
+
+            jcbxCiudad.setModel(modeloCiudad);
+
+        } catch (Exception ex) {
+            Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public boolean bloquearBusqueda() {
@@ -87,6 +165,7 @@ public class Busqueda extends javax.swing.JFrame {
         jbtnCancelar.setEnabled(false);
         jbtnNuevo.setEnabled(true);
         jbtnResumen.setEnabled(false);
+        jbtnCalificar.setEnabled(false);
         return true;
     }
 
@@ -98,7 +177,6 @@ public class Busqueda extends javax.swing.JFrame {
         jbtnNuevo.setEnabled(false);
         jbtnResumen.setEnabled(true);
         jbtnCalificar.setEnabled(false);
-        jtxtCalificacion.setEnabled(false);
         return true;
     }
 
@@ -126,8 +204,8 @@ public class Busqueda extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jlbUsuario = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jtxtCalificacion = new javax.swing.JTextField();
         jbtnCalificar = new javax.swing.JButton();
+        jSpinner1 = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,6 +216,11 @@ public class Busqueda extends javax.swing.JFrame {
         jLabel2.setText("Ciudad");
 
         jbtnBuscar.setText("Buscar");
+        jbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -211,6 +294,11 @@ public class Busqueda extends javax.swing.JFrame {
                 .addGap(36, 36, 36))
         );
 
+        jtbl1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbl1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtbl1);
 
         jLabel3.setText("UUSUARIO: ");
@@ -223,8 +311,8 @@ public class Busqueda extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jtxtCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jbtnCalificar)
                 .addContainerGap())
         );
@@ -234,7 +322,7 @@ public class Busqueda extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnCalificar)
-                    .addComponent(jtxtCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -281,12 +369,23 @@ public class Busqueda extends javax.swing.JFrame {
         // TODO add your handling code here:
         desbloquearBusqueda();
         cargarProfesional();
+        CargarCuidad();
     }//GEN-LAST:event_jbtnNuevoActionPerformed
 
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
         // TODO add your handling code here:
         bloquearBusqueda();
     }//GEN-LAST:event_jbtnCancelarActionPerformed
+
+    private void jtbl1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl1MouseClicked
+        // TODO add your handling code here:
+        jbtnCalificar.setEnabled(true);
+    }//GEN-LAST:event_jtbl1MouseClicked
+
+    private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarActionPerformed
+        // TODO add your handling code here:
+        cargarBusqueda(this.modeloProfesional.getElementAt(this.jcbxProfesional.getSelectedIndex()).toString(), this.modeloCiudad.getElementAt(this.jcbxCiudad.getSelectedIndex()).toString());
+    }//GEN-LAST:event_jbtnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -332,6 +431,7 @@ public class Busqueda extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JButton jbtnBuscar;
     private javax.swing.JButton jbtnCalificar;
     private javax.swing.JButton jbtnCancelar;
@@ -341,6 +441,5 @@ public class Busqueda extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcbxProfesional;
     private javax.swing.JLabel jlbUsuario;
     private javax.swing.JTable jtbl1;
-    private javax.swing.JTextField jtxtCalificacion;
     // End of variables declaration//GEN-END:variables
 }

@@ -131,6 +131,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Buscar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtnBuscarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -203,6 +206,9 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
         <Component class="javax.swing.JTable" name="jtbl1">
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtbl1MouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -220,8 +226,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jtxtCalificacion" min="-2" pref="51" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jSpinner1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jbtnCalificar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -233,7 +239,7 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jbtnCalificar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jtxtCalificacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -241,12 +247,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jtxtCalificacion">
-        </Component>
         <Component class="javax.swing.JButton" name="jbtnCalificar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Calificar"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="jSpinner1">
         </Component>
       </SubComponents>
     </Container>
