@@ -53,6 +53,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jDateFecha = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
         jpsdContraseña = new javax.swing.JPasswordField();
+        jtxtSoloNumeritos1 = new componentePropio.jtxtSoloNumeritos();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,6 +124,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jtxtSoloNumeritos1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jtxtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
                                 .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING)))
                         .addContainerGap(132, Short.MAX_VALUE))))
@@ -133,8 +135,10 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jtxtSoloNumeritos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -157,7 +161,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                     .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jbtnAceptar)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         pack();
@@ -166,7 +170,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private void jbtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAceptarActionPerformed
         // TODO add your handling code here:
 
-        validadorDeCedula(jtxtCedula.getText());
+       // validadorDeCedula(jtxtCedula.getText());
 
 
     }//GEN-LAST:event_jbtnAceptarActionPerformed
@@ -280,7 +284,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
             String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU) "
                     + "values (?,?,?,?,?,?,?)";
-            CED_USU = jtxtCedula.getText();
+           // CED_USU = jtxtCedula.getText();
             NOM_USU = jtxtNombre.getText();
             APE_USU = jtxtApellido.getText();
 
@@ -288,18 +292,18 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
             DIR_USU = jtxtDireccion.getText();
 
-            TEL_USU = jtxtTelefono.getText();
+            //TEL_USU = jtxtTelefono.getText();
 
             CON_USU = jpsdContraseña.getText();
             // DesbloquearBotones();
 
             PreparedStatement psd = cc.prepareStatement(sql);
-            psd.setString(1, CED_USU);
+          // psd.setString(1, CED_USU);
             psd.setString(2, NOM_USU);
             psd.setString(3, APE_USU);
             psd.setString(4, FEC_USU);
             psd.setString(5, DIR_USU);
-            psd.setString(6, TEL_USU);
+           // psd.setString(6, TEL_USU);
             psd.setString(7, CON_USU);
             //
 
@@ -331,5 +335,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtApellido;
     private javax.swing.JTextField jtxtDireccion;
     private javax.swing.JTextField jtxtNombre;
+    private componentePropio.jtxtSoloNumeritos jtxtSoloNumeritos1;
     // End of variables declaration//GEN-END:variables
 }
