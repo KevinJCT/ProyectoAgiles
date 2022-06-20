@@ -18,7 +18,9 @@ import javax.swing.JOptionPane;
 public class Conexion {
 
     Connection con;
-
+  public ResultSet resultado;
+  public Statement sentencia;
+  
     public Connection conectar() {
 
         try {
