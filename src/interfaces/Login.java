@@ -22,9 +22,9 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+setLocationRelativeTo(null);
+
     }
-   
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,8 +131,9 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        RegistroUsuario r = new RegistroUsuario();
+
         Inicarsesion();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -150,20 +151,17 @@ public class Login extends javax.swing.JFrame {
             CON_USU = jpsdContraseña.getText();
             Conexion cn = new Conexion();
             Connection cc = cn.conectar();
-            String sql = "SELECT   CED_USU from usuario WHERE CED_USU='" + CED_USU + "'AND CON_USU='" + CON_USU + "'";
+            String sql = "SELECT CED_USU from usuario WHERE CED_USU='" + CED_USU + "'AND CON_USU='" + CON_USU + "'";
             cn.resultado = cn.sentencia.executeQuery(sql);
 
             if (cn.resultado.next()) {
-                setVisible(false);
-                //JEFE j = new JEFE();
-                //j.lbusuario.setText("Bienevidos:" + cn.resultado.getString("emp_usuario"));
-                //j.setVisible(true);
-                Resumen r = new Resumen();
-
-                r.setVisible(true);
+                //setVisible(false);
+                Busqueda b = new Busqueda();
+                b.setVisible(true);
+                this.dispose();
 
             } else {
-                JOptionPane.showMessageDialog(this, "Usuario y contraseña invalidos");
+                JOptionPane.showMessageDialog(null, "Usuario y contraseña invalidos");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -215,6 +213,10 @@ public class Login extends javax.swing.JFrame {
                 new Login().setVisible(true);
             }
         });
+
+    }
+
+    public void BloquearBoton() {
 
     }
 
