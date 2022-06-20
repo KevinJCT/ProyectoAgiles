@@ -166,7 +166,7 @@ public class Resumen extends javax.swing.JFrame {
     }
 
     private void jbtnContratarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnContratarActionPerformed
-        String IDE_CON,CED_TRA_CON,CED_USU_CON;
+        String IDE_CON, PRE_CON, CED_TRA_CON, CED_USU_CON, EST_CON;
         if (JOptionPane.showConfirmDialog(new JInternalFrame(), "Esta seguro de contrar los servicios",
                 "Contratar servicio", JOptionPane.WARNING_MESSAGE,
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -174,23 +174,30 @@ public class Resumen extends javax.swing.JFrame {
                 Conexion cn = new Conexion();
                 Connection c = cn.conectar();
 
+                if (jTextArea1.getText().isEmpty()) {
+                    PRE_CON = "NINGUNA";
+                } else {
+                    PRE_CON = jTextArea1.getText();
+                }
+
                 IDE_CON = "C1";
                 CED_TRA_CON = CED_TRA;
+                EST_CON = "PENDIENTE";
                 CED_USU_CON = "1802248821";
-                
+
                 System.out.println("Prueba 1");
                 String sql = "INSERT INTO registro_contrato(IDE_CON,PRE_CON,EST_CON,CAL_CON,FEC_INI,FEC_FIN,CED_TRA_CON,CED_USU_CON) VALUES(?,?,?,?,?,?,?,?)";
                 PreparedStatement psd = c.prepareStatement(sql);
-                
+
                 psd.setString(1, IDE_CON);
-                psd.setString(2, null);
-                psd.setString(3, null);
+                psd.setString(2, PRE_CON);
+                psd.setString(3, EST_CON);
                 psd.setString(4, null);
                 psd.setString(5, null);
                 psd.setString(6, null);
                 psd.setString(7, CED_TRA_CON);
                 psd.setString(8, CED_USU_CON);
-                
+
                 int n = psd.executeUpdate();
                 System.out.println("Prueba 2");
                 if (n > 0) {
@@ -198,7 +205,7 @@ public class Resumen extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Se contrato el servicio");
                 }
             } catch (Exception e) {
-                    System.out.println(e);
+                System.out.println(e);
             }
         }
     }//GEN-LAST:event_jbtnContratarActionPerformed
