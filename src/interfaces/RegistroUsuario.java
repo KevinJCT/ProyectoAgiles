@@ -27,7 +27,8 @@ public class RegistroUsuario extends javax.swing.JFrame {
      */
     public RegistroUsuario() {
         initComponents();
-        //bloquearBotones();
+        bloquearBotones();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -53,8 +54,8 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jDateFecha = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
         jpsdContraseña = new javax.swing.JPasswordField();
-        jtxtSoloNumeritos1 = new componentePropio.jtxtSoloNumeritos();
-        jtxtSoloNumeritos2 = new componentePropio.jtxtSoloNumeritos();
+        jtxtCedula = new componentePropio.jtxtSoloNumeritos();
+        jtxtTelefono = new componentePropio.jtxtSoloNumeritos();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,26 +111,22 @@ public class RegistroUsuario extends javax.swing.JFrame {
                                 .addComponent(jLabel6)))))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jtxtCedula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jtxtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                        .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jDateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jtxtSoloNumeritos1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jtxtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                                .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                                    .addComponent(jbtnAceptar)
-                                    .addComponent(jtxtSoloNumeritos2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(135, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtxtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                            .addComponent(jbtnAceptar)
+                            .addComponent(jtxtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +136,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jtxtSoloNumeritos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -161,7 +158,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtSoloNumeritos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jbtnAceptar)
                 .addContainerGap(54, Short.MAX_VALUE))
@@ -173,13 +170,16 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private void jbtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAceptarActionPerformed
         // TODO add your handling code here:
 
-       // validadorDeCedula(jtxtCedula.getText());
-
+        validadorDeCedula(jtxtCedula.getText());
+        Login l = new Login();
+        l.setVisible(true);
+        this.dispose();
 
     }//GEN-LAST:event_jbtnAceptarActionPerformed
 
     private void jpsdContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpsdContraseñaActionPerformed
         // TODO add your handling code here:
+        DesbloquearBotones();
 
 
     }//GEN-LAST:event_jpsdContraseñaActionPerformed
@@ -287,7 +287,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
             String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU) "
                     + "values (?,?,?,?,?,?,?)";
-           // CED_USU = jtxtCedula.getText();
+            CED_USU = jtxtCedula.getText();
             NOM_USU = jtxtNombre.getText();
             APE_USU = jtxtApellido.getText();
 
@@ -295,20 +295,18 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
             DIR_USU = jtxtDireccion.getText();
 
-            //TEL_USU = jtxtTelefono.getText();
-
+            TEL_USU = jtxtTelefono.getText();
             CON_USU = jpsdContraseña.getText();
             // DesbloquearBotones();
 
             PreparedStatement psd = cc.prepareStatement(sql);
-          // psd.setString(1, CED_USU);
+            psd.setString(1, CED_USU);
             psd.setString(2, NOM_USU);
             psd.setString(3, APE_USU);
             psd.setString(4, FEC_USU);
             psd.setString(5, DIR_USU);
-           // psd.setString(6, TEL_USU);
+            psd.setString(6, TEL_USU);
             psd.setString(7, CON_USU);
-            //
 
             int n = psd.executeUpdate();
 
@@ -336,9 +334,9 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jbtnAceptar;
     private javax.swing.JPasswordField jpsdContraseña;
     private javax.swing.JTextField jtxtApellido;
+    private componentePropio.jtxtSoloNumeritos jtxtCedula;
     private javax.swing.JTextField jtxtDireccion;
     private javax.swing.JTextField jtxtNombre;
-    private componentePropio.jtxtSoloNumeritos jtxtSoloNumeritos1;
-    private componentePropio.jtxtSoloNumeritos jtxtSoloNumeritos2;
+    private componentePropio.jtxtSoloNumeritos jtxtTelefono;
     // End of variables declaration//GEN-END:variables
 }
