@@ -161,7 +161,7 @@ setLocationRelativeTo(null);
                 this.dispose();
 
             } else {
-                JOptionPane.showMessageDialog(null, "Usuario y contraseña invalidos");
+                JOptionPane.showMessageDialog(null, "Usuario o Contraseña invalidos");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
