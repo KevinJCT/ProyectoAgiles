@@ -35,6 +35,7 @@ public class Busqueda extends javax.swing.JFrame {
 
     public Busqueda() {
         initComponents();
+        setLocationRelativeTo(this);
         bloquearBusqueda();
         cargarSpinner();
 
@@ -74,7 +75,7 @@ public class Busqueda extends javax.swing.JFrame {
     }
 
     public boolean cargarTabla() {
-        String[] titulos = {"Nombre", "Telefono", "# Servicios", "Calificación"};
+        String[] titulos = {"Cedula","Nombre", "Telefono", "# Servicios", "Calificación"};
         modeloT = new DefaultTableModel(null, titulos);
         jtbl1.setModel(modeloT);
         for (int i = 0; i < titulos.length; i++) {
@@ -93,10 +94,11 @@ public class Busqueda extends javax.swing.JFrame {
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sqlSelect);
             while (rs.next()) {
-                registro[0] = rs.getString("NOM_TRA");
-                registro[1] = rs.getString("TEL1_TRA");
-                registro[2] = rs.getString("CAN_TRA");
-                registro[3] = rs.getString("CAL_TRA");
+                registro[0] = rs.getString("CED_TRA");
+                registro[1] = rs.getString("NOM_TRA");
+                registro[2] = rs.getString("TEL1_TRA");
+                registro[3] = rs.getString("CAN_TRA");
+                registro[4] = rs.getString("CAL_TRA");
                 modeloT.addRow(registro);
             }
             jtbl1.setModel(modeloT);
@@ -124,10 +126,11 @@ public class Busqueda extends javax.swing.JFrame {
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sqlSelect);
             while (rs.next()) {
-                registro[0] = rs.getString("NOM_TRA");
-                registro[1] = rs.getString("TEL1_TRA");
-                registro[2] = rs.getString("CAN_TRA");
-                registro[3] = rs.getString("CAL_TRA");
+                registro[0] = rs.getString("CED_TRA");
+                registro[1] = rs.getString("NOM_TRA");
+                registro[3] = rs.getString("TEL1_TRA");
+                registro[4] = rs.getString("CAN_TRA");
+                registro[5] = rs.getString("CAL_TRA");
                 modeloT.addRow(registro);
             }
             jtbl1.setModel(modeloT);
@@ -164,7 +167,24 @@ public class Busqueda extends javax.swing.JFrame {
         }
 
     }
-    
+      
+    public void nuevaTabla() {
+        int fila = jtbl1.getSelectedRow();
+        jlblFila.setText(String.valueOf(fila));
+        jlblFila.setVisible(false);
+        if (fila >= 0) {
+            Resumen s = new Resumen();
+            s.setVisible(true);
+            
+            String[] info = new String[5];
+
+            info[0] = jtbl1.getValueAt(fila, 0).toString();
+            info[1] = jtbl1.getValueAt(fila, 1).toString();
+
+            Resumen.jlblDato.setText(info[1].toString());
+            //resumen.modelo.addRow(info);          
+        }
+    }
      private void cargarSpinner() {
         String[] cantidad = new String[10];
         Integer x = 1;
@@ -274,6 +294,11 @@ public class Busqueda extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jbtnResumen.setText("Resumen");
+        jbtnResumen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnResumenActionPerformed(evt);
+            }
+        });
 
         jbtnNuevo.setText("Nuevo Contrato");
         jbtnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -410,6 +435,10 @@ public class Busqueda extends javax.swing.JFrame {
         // TODO add your handling code here:
         cargarBusqueda(this.modeloProfesional.getElementAt(this.jcbxProfesional.getSelectedIndex()).toString(), this.modeloCiudad.getElementAt(this.jcbxCiudad.getSelectedIndex()).toString());
     }//GEN-LAST:event_jbtnBuscarActionPerformed
+
+    private void jbtnResumenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnResumenActionPerformed
+        nuevaTabla();
+    }//GEN-LAST:event_jbtnResumenActionPerformed
 
     /**
      * @param args the command line arguments

@@ -46,7 +46,6 @@ public class Resumen extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jbtnContratar = new javax.swing.JButton();
-        jbtnPreguntar = new javax.swing.JButton();
         jlblDato = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblTrabajador = new javax.swing.JTable();
@@ -66,8 +65,6 @@ public class Resumen extends javax.swing.JFrame {
                 jbtnContratarActionPerformed(evt);
             }
         });
-
-        jbtnPreguntar.setText("Preguntar");
 
         jlblDato.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
@@ -99,20 +96,19 @@ public class Resumen extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnPreguntar))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jlblDato, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlblDato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jlblFila2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jbtnContratar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(114, 114, 114))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(jbtnContratar)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -126,18 +122,16 @@ public class Resumen extends javax.swing.JFrame {
                             .addComponent(jlblDato, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlblFila2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtnContratar))))
-                .addGap(18, 18, 18)
+                        .addComponent(jlblFila2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(19, 19, 19)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtnPreguntar)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbtnContratar)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         pack();
@@ -172,21 +166,39 @@ public class Resumen extends javax.swing.JFrame {
     }
 
     private void jbtnContratarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnContratarActionPerformed
+        String IDE_CON,CED_TRA_CON,CED_USU_CON;
         if (JOptionPane.showConfirmDialog(new JInternalFrame(), "Esta seguro de contrar los servicios",
-                "Borrar registro", JOptionPane.WARNING_MESSAGE,
+                "Contratar servicio", JOptionPane.WARNING_MESSAGE,
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
                 Conexion cn = new Conexion();
                 Connection c = cn.conectar();
 
+                IDE_CON = "C1";
+                CED_TRA_CON = CED_TRA;
+                CED_USU_CON = "1802248821";
+                
+                System.out.println("Prueba 1");
                 String sql = "INSERT INTO registro_contrato(IDE_CON,PRE_CON,EST_CON,CAL_CON,FEC_INI,FEC_FIN,CED_TRA_CON,CED_USU_CON) VALUES(?,?,?,?,?,?,?,?)";
                 PreparedStatement psd = c.prepareStatement(sql);
+                
+                psd.setString(1, IDE_CON);
+                psd.setString(2, null);
+                psd.setString(3, null);
+                psd.setString(4, null);
+                psd.setString(5, null);
+                psd.setString(6, null);
+                psd.setString(7, CED_TRA_CON);
+                psd.setString(8, CED_USU_CON);
+                
                 int n = psd.executeUpdate();
+                System.out.println("Prueba 2");
                 if (n > 0) {
+                    System.out.println("Prueba 3");
                     JOptionPane.showMessageDialog(null, "Se contrato el servicio");
                 }
             } catch (Exception e) {
-
+                    System.out.println(e);
             }
         }
     }//GEN-LAST:event_jbtnContratarActionPerformed
@@ -233,7 +245,6 @@ public class Resumen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbtnContratar;
-    private javax.swing.JButton jbtnPreguntar;
     public static javax.swing.JLabel jlblDato;
     public static javax.swing.JLabel jlblFila2;
     private javax.swing.JTable jtblTrabajador;
