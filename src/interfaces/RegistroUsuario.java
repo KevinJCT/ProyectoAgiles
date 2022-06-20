@@ -311,7 +311,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
             int n = psd.executeUpdate();
 
             if (n > 0) {
-                JOptionPane.showMessageDialog(null, "SE INSERTÓ CORRECTAMENTE");
+                JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE");
 
             }
 
