@@ -180,7 +180,9 @@ public class Resumen extends javax.swing.JFrame {
                     PRE_CON = jTextArea1.getText();
                 }
 
-                IDE_CON = "C1";
+                String CAL_CON = "0";
+
+                IDE_CON = "20";
                 CED_TRA_CON = CED_TRA;
                 EST_CON = "PENDIENTE";
                 CED_USU_CON = "1802248821";
@@ -192,7 +194,7 @@ public class Resumen extends javax.swing.JFrame {
                 psd.setString(1, IDE_CON);
                 psd.setString(2, PRE_CON);
                 psd.setString(3, EST_CON);
-                psd.setString(4, null);
+                psd.setString(4, CAL_CON);
                 psd.setString(5, null);
                 psd.setString(6, null);
                 psd.setString(7, CED_TRA_CON);
