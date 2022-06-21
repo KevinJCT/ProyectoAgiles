@@ -6,7 +6,9 @@
 package interfaces;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,7 +24,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
 
     }
 
@@ -46,7 +48,7 @@ setLocationRelativeTo(null);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setText("Bienvenidos");
+        jLabel2.setText("Bienvenido");
 
         jLabel1.setText("Usuario");
 
@@ -133,7 +135,7 @@ setLocationRelativeTo(null);
         // TODO add your handling code here:
 
         Inicarsesion();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -156,7 +158,9 @@ setLocationRelativeTo(null);
 
             if (cn.resultado.next()) {
                 //setVisible(false);
-                Busqueda b = new Busqueda();
+                Busqueda b;
+                Busqueda.usuario = nombreUsu(CED_USU);
+                b = new Busqueda();
                 b.setVisible(true);
                 this.dispose();
 
@@ -167,6 +171,27 @@ setLocationRelativeTo(null);
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public String nombreUsu(String ced) {
+        try {
+
+            String n;
+            Conexion c = new Conexion();
+            Connection cc = c.conectar();
+
+            String sql = "SELECT NOM_USU FROM usuario WHERE CED_USU='" + ced + "'";
+
+            Statement psd = cc.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+
+            if (rs.next()) {
+                return rs.getString("NOM_USU");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
     }
 //
 //    public void Validar() {

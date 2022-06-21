@@ -35,10 +35,12 @@ public class Busqueda extends javax.swing.JFrame {
     DefaultComboBoxModel modeloCiudad;
     SpinnerListModel modeloSpinnerCantidad;
     int fila1;
+    public static String usuario;
 
     public Busqueda() {
         initComponents();
         setLocationRelativeTo(this);
+        this.jlbUsuario.setText(usuario);
         bloquearBusqueda();
         cargarSpinner();
         cargarTabla();
@@ -116,7 +118,7 @@ public class Busqueda extends javax.swing.JFrame {
             String[] registro = new String[modeloT.getColumnCount()];
 
             String sqlSelect;
-            sqlSelect = "SELECT * FROM registro_contrato WHERE CED_USU_CON='1801'";
+            sqlSelect = "SELECT * FROM registro_contrato";
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sqlSelect);
             while (rs.next()) {
@@ -454,6 +456,7 @@ public class Busqueda extends javax.swing.JFrame {
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
         // TODO add your handling code here:
         bloquearBusqueda();
+        cargarTabla();
     }//GEN-LAST:event_jbtnCancelarActionPerformed
 
     private void jtbl1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl1MouseClicked
