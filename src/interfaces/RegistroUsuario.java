@@ -277,44 +277,59 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     public void GuardarRegistro() {
 
-        try {
-            String CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU;
+        if (jtxtCedula.getText().equals("")) {
+            jtxtCedula.requestFocus();
 
-            Conexion cn = new Conexion();
-            Connection cc = cn.conectar();
+        } else if (jtxtNombre.getText().equals("")) {
+            //JOptionPane.showMessageDialog(this,"DATOS INCOMPLETOS");
+            jtxtNombre.requestFocus();
+        } else if (jtxtApellido.getText().equals("")) {
+            jtxtNombre.requestFocus();
+        } else if (jtxtDireccion.getText().equals("")) {
+            jtxtDireccion.requestFocus();
+        } else if (jpsdContraseña.getPassword().equals("")) {
+            jpsdContraseña.requestFocus();
+        } else {
 
-            String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU) "
-                    + "values (?,?,?,?,?,?,?)";
-            CED_USU = jtxtCedula.getText();
-            NOM_USU = jtxtNombre.getText();
-            APE_USU = jtxtApellido.getText();
+            try {
+                String CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU;
 
-            FEC_USU = (((JTextField) jDateFecha.getDateEditor().getUiComponent()).getText());
+                Conexion cn = new Conexion();
+                Connection cc = cn.conectar();
 
-            DIR_USU = jtxtDireccion.getText();
+                String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU) "
+                        + "values (?,?,?,?,?,?,?)";
+                CED_USU = jtxtCedula.getText();
+                NOM_USU = jtxtNombre.getText();
+                APE_USU = jtxtApellido.getText();
 
-            TEL_USU = jtxtTelefono.getText();
-            CON_USU = jpsdContraseña.getText();
-            // DesbloquearBotones();
+                FEC_USU = (((JTextField) jDateFecha.getDateEditor().getUiComponent()).getText());
 
-            PreparedStatement psd = cc.prepareStatement(sql);
-            psd.setString(1, CED_USU);
-            psd.setString(2, NOM_USU);
-            psd.setString(3, APE_USU);
-            psd.setString(4, FEC_USU);
-            psd.setString(5, DIR_USU);
-            psd.setString(6, TEL_USU);
-            psd.setString(7, CON_USU);
+                DIR_USU = jtxtDireccion.getText();
 
-            int n = psd.executeUpdate();
+                TEL_USU = jtxtTelefono.getText();
+                CON_USU = jpsdContraseña.getText();
+                // DesbloquearBotones();
 
-            if (n > 0) {
-                JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE");
+                PreparedStatement psd = cc.prepareStatement(sql);
+                psd.setString(1, CED_USU);
+                psd.setString(2, NOM_USU);
+                psd.setString(3, APE_USU);
+                psd.setString(4, FEC_USU);
+                psd.setString(5, DIR_USU);
+                psd.setString(6, TEL_USU);
+                psd.setString(7, CON_USU);
 
+                int n = psd.executeUpdate();
+
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE");
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

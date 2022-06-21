@@ -147,31 +147,36 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
     public void Inicarsesion() {
 
-        try {
-            String CED_USU, CON_USU;
-            CED_USU = jtxtUsuario.getText();
-            CON_USU = jpsdContraseña.getText();
-            Conexion cn = new Conexion();
-            Connection cc = cn.conectar();
-            String sql = "SELECT CED_USU from usuario WHERE CED_USU='" + CED_USU + "'AND CON_USU='" + CON_USU + "'";
-            cn.resultado = cn.sentencia.executeQuery(sql);
+        if (jtxtUsuario.getText().equals("") || jpsdContraseña.getPassword().equals("")) {
+            JOptionPane.showMessageDialog(this, "DATOS INCOMPLETOS");
+            jtxtUsuario.requestFocus();
+        } else {
 
-            if (cn.resultado.next()) {
-                //setVisible(false);
-                Busqueda b;
-                Busqueda.usuario = nombreUsu(CED_USU);
-                Busqueda.cedula = CED_USU;
-                b = new Busqueda();
-                b.setVisible(true);
-                this.dispose();
+            try {
+                String CED_USU, CON_USU;
+                CED_USU = jtxtUsuario.getText();
+                CON_USU = jpsdContraseña.getText();
+                Conexion cn = new Conexion();
+                Connection cc = cn.conectar();
+                String sql = "SELECT CED_USU from usuario WHERE CED_USU='" + CED_USU + "'AND CON_USU='" + CON_USU + "'";
+                cn.resultado = cn.sentencia.executeQuery(sql);
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario o Contraseña invalidos");
+                if (cn.resultado.next()) {
+                    //setVisible(false);
+                    Busqueda b;
+                    Busqueda.usuario = nombreUsu(CED_USU);
+                    Busqueda.cedula = CED_USU;
+                    b = new Busqueda();
+                    b.setVisible(true);
+                    this.dispose();
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario o Contraseña invalidos");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public String nombreUsu(String ced) {
