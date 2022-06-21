@@ -37,7 +37,7 @@ public class Busqueda extends javax.swing.JFrame {
     SpinnerListModel modeloSpinnerCantidad;
     int fila1;
     String ide_con;
-
+    
     public Busqueda() {
         initComponents();
         setLocationRelativeTo(this);
@@ -45,9 +45,9 @@ public class Busqueda extends javax.swing.JFrame {
         cargarSpinner();
         cargarTabla();
         desbloquearCalificar();
-
+        
     }
-
+    
     public boolean desbloquearCalificar() {
         jtbl1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -66,30 +66,30 @@ public class Busqueda extends javax.swing.JFrame {
                     if (jtbl1.getValueAt(fila1, 1).toString().equals("Pendiente")) {
                         jbtnCalificar.setEnabled(false);
                     }
-
+                    
                 }
             }
         });
         return true;
     }
-
+    
     public boolean cargarProfesional() {
-
+        
         try {
             ArrayList<String> habilidades = new ArrayList<>();
             modeloProfesional = new DefaultComboBoxModel();
             Conexion cc = new Conexion();
             Connection cn = cc.conectar();
-
+            
             String sql = "Select HAB_TRA from habilidades";
             Statement psd = cn.createStatement();
-
+            
             ResultSet rs = psd.executeQuery(sql);
-
+            
             while (rs.next()) {
                 habilidades.add(rs.getString("HAB_TRA"));
             }
-
+            
             Set<String> hashSet = new HashSet<String>(habilidades);
             habilidades.clear();
             habilidades.addAll(hashSet);
@@ -105,31 +105,31 @@ public class Busqueda extends javax.swing.JFrame {
         }
         return true;
     }
-
+    
     public boolean calificarServicio() {
-
+        
         try {
             Conexion cc = new Conexion();
             Connection cn = cc.conectar();
-
+            
             System.out.println(jSpinner1.getValue().toString());
             String sql = "update registro_contrato set CAL_CON='" + jSpinner1.getValue().toString() + "' where IDE_CON='" + ide_con + "'";
             PreparedStatement psd = cn.prepareStatement(sql);
-
+            
             int n = psd.executeUpdate();
-
+            
             if (n > 0) {
                 JOptionPane.showMessageDialog(null, "Calificación registrada");
                 return true;
             }
-
+            
             return false;
         } catch (SQLException ex) {
             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
     }
-
+    
     public boolean cargarTabla() {
         String[] titulos = {"N° Contrato", "Estado", "Cedula Trabajador"};
         modeloT = new DefaultTableModel(null, titulos);
@@ -140,10 +140,12 @@ public class Busqueda extends javax.swing.JFrame {
         try {
             Conexion cn = new Conexion();
             Connection cc = cn.conectar();
-
+            
             String[] registro = new String[modeloT.getColumnCount()];
-
+            
             String sqlSelect;
+
+            // Falta poner la cedula del usuario
             sqlSelect = "SELECT * FROM registro_contrato WHERE CED_USU_CON='1801' AND CAL_CON=0";
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sqlSelect);
@@ -161,13 +163,13 @@ public class Busqueda extends javax.swing.JFrame {
         }
         return true;
     }
-
+    
     public void cargarBusqueda(String habilidad, String ciudad) {
         try {
             System.out.println("entro cargar busqueda");
             Conexion cn = new Conexion();
             Connection cc = cn.conectar();
-
+            
             String[] titulos = {"Cedula", "Nombre", "Telefono", "# Servicios", "Calificación"};
             modeloT = new DefaultTableModel(null, titulos);
             jtbl1.setModel(modeloT);
@@ -176,10 +178,10 @@ public class Busqueda extends javax.swing.JFrame {
             }
             System.out.println(modeloT.getColumnCount());
             String[] registros = new String[modeloT.getColumnCount()];
-
+            
             String sqlSelect;
             sqlSelect = "SELECT * FROM trabajador WHERE CED_TRA IN (SELECT CED_TRA_PER FROM habilidades WHERE HAB_TRA = '" + habilidad + "') AND NAC_TRA = (SELECT IDE_CIU FROM ciudad WHERE NOM_CIU = '" + ciudad + "')";
-
+            
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sqlSelect);
             while (rs.next()) {
@@ -195,10 +197,10 @@ public class Busqueda extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-
+    
     public void CargarCuidad() {
         try {
-
+            
             ArrayList<String> ciudades = new ArrayList<>();
             modeloCiudad = new DefaultComboBoxModel();
             Conexion cc = new Conexion();
@@ -213,18 +215,18 @@ public class Busqueda extends javax.swing.JFrame {
             System.out.println(ciudades.size());
             for (String i : ciudades) {
                 modeloCiudad.addElement(i);
-
+                
             }
             //ciudad.addElement(ciudades);
 
             jcbxCiudad.setModel(modeloCiudad);
-
+            
         } catch (Exception ex) {
             Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     public void nuevaTabla() {
         int fila = jtbl1.getSelectedRow();
         jlblFila.setText(String.valueOf(fila));
@@ -232,17 +234,17 @@ public class Busqueda extends javax.swing.JFrame {
         if (fila >= 0) {
             Resumen s = new Resumen();
             s.setVisible(true);
-
+            
             String[] info = new String[5];
-
+            
             info[0] = jtbl1.getValueAt(fila, 0).toString();
             info[1] = jtbl1.getValueAt(fila, 1).toString();
-
+            
             Resumen.jlblDato.setText(info[1].toString());
             //resumen.modelo.addRow(info);          
         }
     }
-
+    
     private void cargarSpinner() {
         String[] cantidad = new String[10];
         Integer x = 1;
@@ -253,7 +255,7 @@ public class Busqueda extends javax.swing.JFrame {
         modeloSpinnerCantidad = new SpinnerListModel(cantidad);
         jSpinner1.setModel(modeloSpinnerCantidad);
     }
-
+    
     public boolean bloquearBusqueda() {
         jcbxProfesional.setEnabled(false);
         jcbxCiudad.setEnabled(false);
@@ -264,14 +266,14 @@ public class Busqueda extends javax.swing.JFrame {
         jbtnCalificar.setEnabled(false);
         return true;
     }
-
+    
     public boolean desbloquearBusqueda() {
         jcbxProfesional.setEnabled(true);
         jcbxCiudad.setEnabled(true);
         jbtnBuscar.setEnabled(true);
         jbtnCancelar.setEnabled(true);
         jbtnNuevo.setEnabled(false);
-        jbtnResumen.setEnabled(true);
+//        jbtnResumen.setEnabled(true);
         jbtnCalificar.setEnabled(false);
         return true;
     }
@@ -497,6 +499,7 @@ public class Busqueda extends javax.swing.JFrame {
 
     private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarActionPerformed
         // TODO add your handling code here:
+        jbtnResumen.setEnabled(true);
         cargarBusqueda(this.modeloProfesional.getElementAt(this.jcbxProfesional.getSelectedIndex()).toString(), this.modeloCiudad.getElementAt(this.jcbxCiudad.getSelectedIndex()).toString());
     }//GEN-LAST:event_jbtnBuscarActionPerformed
 

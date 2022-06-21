@@ -18,16 +18,16 @@ import javax.swing.JOptionPane;
 public class Conexion {
 
     Connection con;
-  public ResultSet resultado;
-  public Statement sentencia;
-  
+    public ResultSet resultado;
+    public Statement sentencia;
+
     public Connection conectar() {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/bdagiles", "root", "");
 //            con = DriverManager.getConnection("jdbc:mysql://localhost:3307/agiles", "root", "");
-            sentencia =con.createStatement();
+            sentencia = con.createStatement();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
