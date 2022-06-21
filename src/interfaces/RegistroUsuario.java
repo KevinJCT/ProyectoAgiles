@@ -169,8 +169,8 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     private void jbtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAceptarActionPerformed
         // TODO add your handling code here:
-
-       // validadorDeCedula(jtxtCedula.getText());
+        GuardarRegistro();
+        // validadorDeCedula(jtxtCedula.getText());
         Login l = new Login();
         l.setVisible(true);
         this.dispose();
