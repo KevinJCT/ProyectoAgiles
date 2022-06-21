@@ -6,6 +6,7 @@
 package interfaces;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,7 +36,8 @@ public class Busqueda extends javax.swing.JFrame {
     DefaultComboBoxModel modeloCiudad;
     SpinnerListModel modeloSpinnerCantidad;
     int fila1;
-    public static String usuario;
+    static String usuario;
+    String ide_con;
 
     public Busqueda() {
         initComponents();
@@ -56,7 +58,9 @@ public class Busqueda extends javax.swing.JFrame {
                     fila1 = jtbl1.getSelectedRow();
                     if (jtbl1.getValueAt(fila1, 1).toString().equals("Finalizado")) {
                         jbtnCalificar.setEnabled(true);
-                        System.out.println(jtbl1.getValueAt(fila1, 1).toString());
+                        System.out.println(jtbl1.getValueAt(fila1, 0).toString());
+                        ide_con = jtbl1.getValueAt(fila1, 0).toString();
+//                        System.out.println(jtbl1.getValueAt(fila1, 1).toString());
                     }
                     if (jtbl1.getValueAt(fila1, 1).toString().equals("Iniciado")) {
                         jbtnCalificar.setEnabled(false);
@@ -104,6 +108,30 @@ public class Busqueda extends javax.swing.JFrame {
         return true;
     }
 
+    public boolean calificarServicio() {
+
+        try {
+            Conexion cc = new Conexion();
+            Connection cn = cc.conectar();
+
+            System.out.println(jSpinner1.getValue().toString());
+            String sql = "update registro_contrato set CAL_CON='" + jSpinner1.getValue().toString() + "' where IDE_CON='" + ide_con + "'";
+            PreparedStatement psd = cn.prepareStatement(sql);
+
+            int n = psd.executeUpdate();
+
+            if (n > 0) {
+                JOptionPane.showMessageDialog(null, "Calificación registrada");
+                return true;
+            }
+
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+    }
+
     public boolean cargarTabla() {
         String[] titulos = {"N° Contrato", "Estado", "Cedula Trabajador"};
         modeloT = new DefaultTableModel(null, titulos);
@@ -118,7 +146,7 @@ public class Busqueda extends javax.swing.JFrame {
             String[] registro = new String[modeloT.getColumnCount()];
 
             String sqlSelect;
-            sqlSelect = "SELECT * FROM registro_contrato";
+            sqlSelect = "SELECT * FROM registro_contrato WHERE CED_USU_CON='1801' AND CAL_CON=0";
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sqlSelect);
             while (rs.next()) {
@@ -150,10 +178,10 @@ public class Busqueda extends javax.swing.JFrame {
             }
             System.out.println(modeloT.getColumnCount());
             String[] registros = new String[modeloT.getColumnCount()];
-            
+
             String sqlSelect;
             sqlSelect = "SELECT * FROM trabajador WHERE CED_TRA IN (SELECT CED_TRA_PER FROM habilidades WHERE HAB_TRA = '" + habilidad + "') AND NAC_TRA = (SELECT IDE_CIU FROM ciudad WHERE NOM_CIU = '" + ciudad + "')";
-           
+
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(sqlSelect);
             while (rs.next()) {
@@ -380,6 +408,11 @@ public class Busqueda extends javax.swing.JFrame {
         jLabel3.setText("USUARIO: ");
 
         jbtnCalificar.setText("Calificar");
+        jbtnCalificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCalificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -473,6 +506,12 @@ public class Busqueda extends javax.swing.JFrame {
     private void jbtnResumenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnResumenActionPerformed
         nuevaTabla();
     }//GEN-LAST:event_jbtnResumenActionPerformed
+
+    private void jbtnCalificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCalificarActionPerformed
+        // TODO add your handling code here:
+        calificarServicio();
+        cargarTabla();
+    }//GEN-LAST:event_jbtnCalificarActionPerformed
 
     /**
      * @param args the command line arguments
