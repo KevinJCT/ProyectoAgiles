@@ -49,10 +49,11 @@
                   <Component id="jLabel1" min="-2" pref="73" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jtxtDireccion" alignment="0" max="32767" attributes="0"/>
                           <Component id="jbtnAceptar" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jtxtDireccion" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jtxtTelefono" alignment="0" pref="85" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" pref="76" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jpsdContraseña" min="-2" pref="96" max="-2" attributes="0"/>
@@ -64,7 +65,7 @@
                       <Component id="jtxtApellido" alignment="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="135" max="32767" attributes="0"/>
+              <EmptySpace pref="137" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -103,6 +104,7 @@
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel8" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jpsdContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtxtTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jbtnAceptar" min="-2" max="-2" attributes="0"/>
