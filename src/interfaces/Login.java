@@ -160,6 +160,7 @@ public class Login extends javax.swing.JFrame {
                 //setVisible(false);
                 Busqueda b;
                 Busqueda.usuario = nombreUsu(CED_USU);
+                Busqueda.cedula = CED_USU;
                 b = new Busqueda();
                 b.setVisible(true);
                 this.dispose();

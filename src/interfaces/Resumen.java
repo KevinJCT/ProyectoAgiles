@@ -9,9 +9,12 @@ import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -28,11 +31,35 @@ public class Resumen extends javax.swing.JFrame {
     public static DefaultTableModel modelo;
     int fila = Integer.parseInt(Busqueda.jlblFila.getText());
     String CED_TRA = Busqueda.jtbl1.getValueAt(fila, 0).toString();
+    static String cedula;
 
     public Resumen() {
         initComponents();
         setLocationRelativeTo(this);
         cargarTabla();
+    }
+
+    public int id_incrementable() {
+        int id = 1;
+        try {
+            System.out.println("Entro id_incremental");
+            Conexion cc = new Conexion();
+            Connection cn = cc.conectar();
+
+            String sql = "Select Max(IDE_CON) FROM registro_contrato";
+            Statement psd = cn.createStatement();
+            System.out.println("Antes de rs");
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getInt(1) + 1;
+            }
+            System.out.println("ID:" + id);
+
+        } catch (Exception ex) {
+            Logger.getLogger(Resumen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+
     }
 
     /**
@@ -182,10 +209,13 @@ public class Resumen extends javax.swing.JFrame {
 
                 String CAL_CON = "0";
 
-                IDE_CON = "20";
+                IDE_CON = String.valueOf(id_incrementable());
+                System.out.println("Ide del contrato" + IDE_CON);
                 CED_TRA_CON = CED_TRA;
                 EST_CON = "PENDIENTE";
-                CED_USU_CON = "1802248821";
+                
+                //Falta sacar la cedula del usuario
+                CED_USU_CON = cedula;
 
                 System.out.println("Prueba 1");
                 String sql = "INSERT INTO registro_contrato(IDE_CON,PRE_CON,EST_CON,CAL_CON,FEC_INI,FEC_FIN,CED_TRA_CON,CED_USU_CON) VALUES(?,?,?,?,?,?,?,?)";
