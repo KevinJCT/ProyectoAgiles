@@ -6,6 +6,8 @@
 package interfaces;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,6 +84,7 @@ public class Resumen extends javax.swing.JFrame {
         jlblFila2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("TRABAJADOR:");
@@ -136,7 +139,7 @@ public class Resumen extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(186, 186, 186)
                         .addComponent(jbtnContratar)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +161,7 @@ public class Resumen extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnContratar)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -190,6 +193,12 @@ public class Resumen extends javax.swing.JFrame {
             jtblTrabajador.setModel(modelo);
         } catch (Exception e) {
         }
+    }
+    
+            @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/trab.jpg"));
+        return retValue;
     }
 
     private void jbtnContratarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnContratarActionPerformed
@@ -235,11 +244,13 @@ public class Resumen extends javax.swing.JFrame {
                 if (n > 0) {
                     System.out.println("Prueba 3");
                     JOptionPane.showMessageDialog(null, "Se contrato el servicio");
+                    this.dispose();
                 }
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
+                this.dispose();
     }//GEN-LAST:event_jbtnContratarActionPerformed
 
     /**

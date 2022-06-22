@@ -5,6 +5,8 @@
  */
 package interfaces;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -282,6 +284,12 @@ public class Busqueda extends javax.swing.JFrame {
         jbtnCalificar.setEnabled(false);
         return true;
     }
+    
+        @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/trab.jpg"));
+        return retValue;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -312,6 +320,7 @@ public class Busqueda extends javax.swing.JFrame {
         jlblFila = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 

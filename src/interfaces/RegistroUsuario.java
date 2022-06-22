@@ -5,6 +5,8 @@
  */
 package interfaces;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -58,6 +60,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jtxtTelefono = new componentePropio.SoloNumeros();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         jLabel1.setText("REGISTRAR");
 
@@ -333,6 +336,12 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+            @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/trab.jpg"));
+        return retValue;
     }
 
 
