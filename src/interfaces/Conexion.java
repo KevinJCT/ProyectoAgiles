@@ -24,11 +24,12 @@ public class Conexion {
     public Connection conectar() {
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost/bdagiles", "root", "");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+           //   con = DriverManager.getConnection("jdbc:mysql://mysql20.000webhost.com/id18391974_m", "id18391974_root", "dnEq9Ok2F!=Nt%I<");
 //            con = DriverManager.getConnection("jdbc:mysql://localhost:3307/agiles", "root", "");
             con = DriverManager.getConnection("jdbc:mysql://localhost/metodologias", "root", "");
-            sentencia =con.createStatement();
+            sentencia = con.createStatement();
+            System.out.println("dddd");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }

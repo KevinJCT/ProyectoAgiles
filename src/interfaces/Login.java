@@ -138,9 +138,15 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-
-        Inicarsesion();
-
+        if (controlDatosvacios()) {
+            if (validar(this.jtxtUsuario.getText())) {
+                if (controlTamanoDatos()) {
+                    Inicarsesion();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "cedula no valida");
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -151,39 +157,33 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
     public void Inicarsesion() {
+        try {
+            String CED_USU, CON_USU;
+            CED_USU = jtxtUsuario.getText();
+            CON_USU = jpsdContraseña.getText();
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+            String sql = "SELECT CED_USU from usuario WHERE CED_USU='" + CED_USU + "'AND CON_USU='" + CON_USU + "'";
+            cn.resultado = cn.sentencia.executeQuery(sql);
 
-        if (jtxtUsuario.getText().equals("") || jpsdContraseña.getPassword().equals("")) {
-            JOptionPane.showMessageDialog(this, "DATOS INCOMPLETOS");
-            jtxtUsuario.requestFocus();
-        } else {
+            if (cn.resultado.next()) {
+                //setVisible(false);
+                Busqueda b;
+                Busqueda.usuario = nombreUsu(CED_USU);
+                Busqueda.cedula = CED_USU;
+                b = new Busqueda();
+                b.setVisible(true);
+                this.dispose();
 
-            try {
-                String CED_USU, CON_USU;
-                CED_USU = jtxtUsuario.getText();
-                CON_USU = jpsdContraseña.getText();
-                Conexion cn = new Conexion();
-                Connection cc = cn.conectar();
-                String sql = "SELECT CED_USU from usuario WHERE CED_USU='" + CED_USU + "'AND CON_USU='" + CON_USU + "'";
-                cn.resultado = cn.sentencia.executeQuery(sql);
-
-                if (cn.resultado.next()) {
-                    //setVisible(false);
-                    Busqueda b;
-                    Busqueda.usuario = nombreUsu(CED_USU);
-                    Busqueda.cedula = CED_USU;
-                    b = new Busqueda();
-                    b.setVisible(true);
-                    this.dispose();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuario o Contraseña invalidos");
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario o Contraseña invalidos");
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
-    
+
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/trab.jpg"));
@@ -206,7 +206,7 @@ public class Login extends javax.swing.JFrame {
                 return rs.getString("NOM_USU");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
         }
         return "";
     }
@@ -221,6 +221,50 @@ public class Login extends javax.swing.JFrame {
 //        }
 //
 //    }
+
+    private boolean controlDatosvacios() {
+        if (jtxtUsuario.getText().equals("") || jpsdContraseña.getPassword().equals("")) {
+            JOptionPane.showMessageDialog(this, "DATOS INCOMPLETOS");
+            jtxtUsuario.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean controlTamanoDatos() {
+        if (jpsdContraseña.getText().length() > 10) {
+            JOptionPane.showMessageDialog(null, "La contraseña excede los 20 caracteres");
+            jpsdContraseña.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validar(String cedula) {
+        boolean cedulaCorrecta;
+        try {
+            if (cedula.length() == 10) {
+                // Coeficientes de validación cédula
+                // El decimo digito se lo considera dígito verificador
+                int[] coefValCedula = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+                int verificador = Integer.parseInt(cedula.substring(9, 10));
+                int suma = 0;
+                int digito;
+                for (int i = 0; i < (cedula.length() - 1); i++) {
+                    digito = Integer.parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
+                    suma += ((digito % 10) + (digito / 10));
+                }
+
+                cedulaCorrecta = ((suma % 10 == 0 && verificador == 0) || (10 - suma % 10 == verificador));
+            } else {
+                cedulaCorrecta = false;
+            }
+        } catch (Exception e) {
+            cedulaCorrecta = false;
+        }
+        return cedulaCorrecta;
+    }
 
     /**
      * @param args the command line arguments
@@ -258,9 +302,6 @@ public class Login extends javax.swing.JFrame {
 
     }
 
-    public void BloquearBoton() {
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

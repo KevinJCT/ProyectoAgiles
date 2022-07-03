@@ -10,7 +10,9 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -29,7 +31,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
      */
     public RegistroUsuario() {
         initComponents();
-        bloquearBotones();
+      //  bloquearBotones();
         setLocationRelativeTo(null);
     }
 
@@ -108,28 +110,28 @@ public class RegistroUsuario extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel6)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbtnAceptar)
-                            .addComponent(jtxtDireccion)
-                            .addComponent(jtxtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jbtnAceptar)
+                        .addComponent(jtxtDireccion)
+                        .addComponent(jtxtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
                     .addComponent(jDateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jtxtCedula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jtxtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                        .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(137, Short.MAX_VALUE))
+                        .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,12 +161,18 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpsdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jbtnAceptar)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(42, 42, 42))
         );
 
         pack();
@@ -172,19 +180,24 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     private void jbtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAceptarActionPerformed
         // TODO add your handling code here:
-        GuardarRegistro();
-        // validadorDeCedula(jtxtCedula.getText());
-        Login l = new Login();
-        l.setVisible(true);
-        this.dispose();
+        if (controlDatosVacios()) {
+            if (validar(this.jtxtCedula.getText())) {
+                if (controlTamanoDatos()) {
+                    if (usuarioExistente()) {
+                        GuardarRegistro();
+                        Login l = new Login();
+                        l.setVisible(true);
+                        this.dispose();
+                    }
+                }
+            }
+        }
 
     }//GEN-LAST:event_jbtnAceptarActionPerformed
 
     private void jpsdContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpsdContraseñaActionPerformed
         // TODO add your handling code here:
-        DesbloquearBotones();
-
-
+     //   DesbloquearBotones();
     }//GEN-LAST:event_jpsdContraseñaActionPerformed
 
     /**
@@ -230,120 +243,155 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jbtnAceptar.setEnabled(true);
     }
 
-    public boolean validadorDeCedula(String cedula) {
-        boolean cedulaCorrecta = false;
-
+    public boolean usuarioExistente() {
         try {
-
-            if (cedula.length() == 10) // ConstantesApp.LongitudCedula
-            {
-                int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
-                if (tercerDigito < 6) {
-// Coeficientes de validación cédula
-// El decimo digito se lo considera dígito verificador
-                    char[] coefValCedula = {2, 1, 2, 1, 2, 1, 2, 1, 2};
-                    int verificador = Integer.parseInt(cedula.substring(9, 10));
-                    int suma = 0;
-                    int digito = 0;
-                    for (int i = 0; i < (cedula.length() - 1); i++) {
-                        digito = Integer.parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
-                        suma += ((digito % 10) + (digito / 10));
-                    }
-
-                    if ((suma % 10 == 0) && (suma % 10 == verificador)) {
-                        cedulaCorrecta = true;
-                    } else if ((10 - (suma % 10)) == verificador) {
-                        cedulaCorrecta = true;
-                        GuardarRegistro();
-
-                    } else {
-                        cedulaCorrecta = false;
-                    }
-                } else {
-                    cedulaCorrecta = false;
+            Conexion c = new Conexion();
+            Connection cn = c.conectar();
+            String sqlS = "SELECT COUNT(1) FROM usuario WHERE CED_USU='" + jtxtCedula.getText() + "'";
+            Statement psd = cn.createStatement();
+            ResultSet rs = psd.executeQuery(sqlS);
+            if (rs.next()) {
+                if (!rs.getString("COUNT(1)").equals("0")) {
+                    JOptionPane.showMessageDialog(this, "El usuario ya existe.");
+                    return false;
                 }
-            } else {
-                cedulaCorrecta = false;
             }
-            //JOptionPane.showMessageDialog(null, "cedula correcto");
-        } catch (NumberFormatException nfe) {
-            cedulaCorrecta = false;
-        } catch (Exception err) {
-            System.out.println("Una excepcion ocurrio en el proceso de validadcion");
-            cedulaCorrecta = false;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
-
-        if (!cedulaCorrecta) {
-            //System.out.println("La Cédula ingresada es Incorrecta");
-            JOptionPane.showMessageDialog(null, "La Cédula ingresada es Incorrecta");
-        }
-        return cedulaCorrecta;
+        return true;
     }
 
     public void GuardarRegistro() {
 
-        if (jtxtCedula.getText().equals("")) {
-            jtxtCedula.requestFocus();
+        try {
+            String CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU;
 
-        } else if (jtxtNombre.getText().equals("")) {
-            //JOptionPane.showMessageDialog(this,"DATOS INCOMPLETOS");
-            jtxtNombre.requestFocus();
-        } else if (jtxtApellido.getText().equals("")) {
-            jtxtNombre.requestFocus();
-        } else if (jtxtDireccion.getText().equals("")) {
-            jtxtDireccion.requestFocus();
-        } else if (jpsdContraseña.getPassword().equals("")) {
-            jpsdContraseña.requestFocus();
-        } else {
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
 
-            try {
-                String CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU;
+            String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU) "
+                    + "values (?,?,?,?,?,?,?)";
+            CED_USU = jtxtCedula.getText();
+            NOM_USU = jtxtNombre.getText();
+            APE_USU = jtxtApellido.getText();
 
-                Conexion cn = new Conexion();
-                Connection cc = cn.conectar();
+            FEC_USU = (((JTextField) jDateFecha.getDateEditor().getUiComponent()).getText());
 
-                String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU) "
-                        + "values (?,?,?,?,?,?,?)";
-                CED_USU = jtxtCedula.getText();
-                NOM_USU = jtxtNombre.getText();
-                APE_USU = jtxtApellido.getText();
+            DIR_USU = jtxtDireccion.getText();
 
-                FEC_USU = (((JTextField) jDateFecha.getDateEditor().getUiComponent()).getText());
+            TEL_USU = jtxtTelefono.getText();
+            CON_USU = jpsdContraseña.getText();
+            // DesbloquearBotones();
 
-                DIR_USU = jtxtDireccion.getText();
+            PreparedStatement psd = cc.prepareStatement(sql);
+            psd.setString(1, CED_USU);
+            psd.setString(2, NOM_USU);
+            psd.setString(3, APE_USU);
+            psd.setString(4, FEC_USU);
+            psd.setString(5, DIR_USU);
+            psd.setString(6, TEL_USU);
+            psd.setString(7, CON_USU);
 
-                TEL_USU = jtxtTelefono.getText();
-                CON_USU = jpsdContraseña.getText();
-                // DesbloquearBotones();
+            int n = psd.executeUpdate();
 
-                PreparedStatement psd = cc.prepareStatement(sql);
-                psd.setString(1, CED_USU);
-                psd.setString(2, NOM_USU);
-                psd.setString(3, APE_USU);
-                psd.setString(4, FEC_USU);
-                psd.setString(5, DIR_USU);
-                psd.setString(6, TEL_USU);
-                psd.setString(7, CON_USU);
+            if (n > 0) {
+                JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE");
 
-                int n = psd.executeUpdate();
-
-                if (n > 0) {
-                    JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE");
-
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-            @Override
+
+    @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/trab.jpg"));
         return retValue;
     }
 
+    private boolean controlDatosVacios() {
+
+        if (jtxtCedula.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese una cedula");
+            jtxtCedula.requestFocus();
+            return false;
+        } else if (jtxtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese  nombre");
+            jtxtNombre.requestFocus();
+            return false;
+        } else if (jtxtApellido.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese apellido");
+            jtxtApellido.requestFocus();
+            return false;
+        } else if (jtxtDireccion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese direccion");
+            jtxtDireccion.requestFocus();
+            return false;
+        } else if (jtxtTelefono.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese numero de telefono");
+            jtxtTelefono.requestFocus();
+            return false;
+        } else if (jpsdContraseña.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese contraseña");
+            jpsdContraseña.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean controlTamanoDatos() {
+        if (jtxtNombre.getText().length() > 20) {
+            JOptionPane.showMessageDialog(null, "El nombre excede los 20 caracteres");
+            jtxtNombre.requestFocus();
+            return false;
+        } else if (jtxtApellido.getText().length() > 20) {
+            JOptionPane.showMessageDialog(null, "El apellido excede los 20 caracteres");
+            jtxtApellido.requestFocus();
+            return false;
+        } else if (jtxtDireccion.getText().length() > 20) {
+            JOptionPane.showMessageDialog(null, "La direccion excede los 20 caracteres");
+            jtxtDireccion.requestFocus();
+            return false;
+        } else if (jtxtTelefono.getText().length() > 10) {
+            JOptionPane.showMessageDialog(null, "El numero execede los 10 caracteres");
+            jtxtTelefono.requestFocus();
+            return false;
+        } else if (jpsdContraseña.getText().length() > 10) {
+            JOptionPane.showMessageDialog(null, "La clave excede los 20 caracteres");
+            jpsdContraseña.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validar(String cedula) {
+        boolean cedulaCorrecta;
+        try {
+            if (cedula.length() == 10) {
+                // Coeficientes de validación cédula
+                // El decimo digito se lo considera dígito verificador
+                int[] coefValCedula = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+                int verificador = Integer.parseInt(cedula.substring(9, 10));
+                int suma = 0;
+                int digito;
+                for (int i = 0; i < (cedula.length() - 1); i++) {
+                    digito = Integer.parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
+                    suma += ((digito % 10) + (digito / 10));
+                }
+
+                cedulaCorrecta = ((suma % 10 == 0 && verificador == 0) || (10 - suma % 10 == verificador));
+            } else {
+                cedulaCorrecta = false;
+            }
+        } catch (Exception e) {
+            cedulaCorrecta = false;
+        }
+        return cedulaCorrecta;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser jDateFecha;

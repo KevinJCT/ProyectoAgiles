@@ -194,63 +194,75 @@ public class Resumen extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-    
-            @Override
+
+    @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/trab.jpg"));
         return retValue;
     }
 
+    private boolean controlTamanoDatos() {
+        if (jTextArea1.getText().length() > 30) {
+            JOptionPane.showMessageDialog(null, "La pregunta excede los 30 caracteres");
+            jTextArea1.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private void jbtnContratarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnContratarActionPerformed
         String IDE_CON, PRE_CON, CED_TRA_CON, CED_USU_CON, EST_CON;
-        if (JOptionPane.showConfirmDialog(new JInternalFrame(), "Esta seguro de contrar los servicios",
-                "Contratar servicio", JOptionPane.WARNING_MESSAGE,
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            try {
-                Conexion cn = new Conexion();
-                Connection c = cn.conectar();
+        if (controlTamanoDatos()) {
+            if (JOptionPane.showConfirmDialog(new JInternalFrame(), "Esta seguro de contrar los servicios",
+                    "Contratar servicio", JOptionPane.WARNING_MESSAGE,
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                try {
+                    Conexion cn = new Conexion();
+                    Connection c = cn.conectar();
 
-                if (jTextArea1.getText().isEmpty()) {
-                    PRE_CON = "NINGUNA";
-                } else {
-                    PRE_CON = jTextArea1.getText();
+                    if (jTextArea1.getText().isEmpty()) {
+                        PRE_CON = "NINGUNA";
+                    } else {
+                        PRE_CON = jTextArea1.getText();
+                    }
+
+                    String CAL_CON = "0";
+
+                    IDE_CON = String.valueOf(id_incrementable());
+                    System.out.println("Ide del contrato" + IDE_CON);
+                    CED_TRA_CON = CED_TRA;
+                    EST_CON = "PENDIENTE";
+
+                    //Falta sacar la cedula del usuario
+                    CED_USU_CON = cedula;
+
+                    System.out.println("Prueba 1");
+                    String sql = "INSERT INTO registro_contrato(IDE_CON,PRE_CON,EST_CON,CAL_CON,FEC_INI,FEC_FIN,CED_TRA_CON,CED_USU_CON) VALUES(?,?,?,?,?,?,?,?)";
+                    PreparedStatement psd = c.prepareStatement(sql);
+
+                    psd.setString(1, IDE_CON);
+                    psd.setString(2, PRE_CON);
+                    psd.setString(3, EST_CON);
+                    psd.setString(4, CAL_CON);
+                    psd.setString(5, null);
+                    psd.setString(6, null);
+                    psd.setString(7, CED_TRA_CON);
+                    psd.setString(8, CED_USU_CON);
+
+                    int n = psd.executeUpdate();
+                    System.out.println("Prueba 2");
+                    if (n > 0) {
+                        System.out.println("Prueba 3");
+                        JOptionPane.showMessageDialog(null, "Se contrato el servicio");
+                        this.dispose();
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
-
-                String CAL_CON = "0";
-
-                IDE_CON = String.valueOf(id_incrementable());
-                System.out.println("Ide del contrato" + IDE_CON);
-                CED_TRA_CON = CED_TRA;
-                EST_CON = "PENDIENTE";
-                
-                //Falta sacar la cedula del usuario
-                CED_USU_CON = cedula;
-
-                System.out.println("Prueba 1");
-                String sql = "INSERT INTO registro_contrato(IDE_CON,PRE_CON,EST_CON,CAL_CON,FEC_INI,FEC_FIN,CED_TRA_CON,CED_USU_CON) VALUES(?,?,?,?,?,?,?,?)";
-                PreparedStatement psd = c.prepareStatement(sql);
-
-                psd.setString(1, IDE_CON);
-                psd.setString(2, PRE_CON);
-                psd.setString(3, EST_CON);
-                psd.setString(4, CAL_CON);
-                psd.setString(5, null);
-                psd.setString(6, null);
-                psd.setString(7, CED_TRA_CON);
-                psd.setString(8, CED_USU_CON);
-
-                int n = psd.executeUpdate();
-                System.out.println("Prueba 2");
-                if (n > 0) {
-                    System.out.println("Prueba 3");
-                    JOptionPane.showMessageDialog(null, "Se contrato el servicio");
-                    this.dispose();
-                }
-            } catch (Exception e) {
-                System.out.println(e);
             }
+            this.dispose();
         }
-                this.dispose();
     }//GEN-LAST:event_jbtnContratarActionPerformed
 
     /**
