@@ -31,7 +31,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
      */
     public RegistroUsuario() {
         initComponents();
-      //  bloquearBotones();
+        //  bloquearBotones();
         setLocationRelativeTo(null);
     }
 
@@ -184,12 +184,14 @@ public class RegistroUsuario extends javax.swing.JFrame {
             if (validar(this.jtxtCedula.getText())) {
                 if (controlTamanoDatos()) {
                     if (usuarioExistente()) {
-                        GuardarRegistro();
+                        GuardarRegistro2();
                         Login l = new Login();
                         l.setVisible(true);
                         this.dispose();
                     }
                 }
+            }else{
+             JOptionPane.showMessageDialog(null, "cedula no valida");
             }
         }
 
@@ -197,7 +199,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     private void jpsdContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpsdContraseñaActionPerformed
         // TODO add your handling code here:
-     //   DesbloquearBotones();
+        //   DesbloquearBotones();
     }//GEN-LAST:event_jpsdContraseñaActionPerformed
 
     /**
@@ -262,36 +264,61 @@ public class RegistroUsuario extends javax.swing.JFrame {
         return true;
     }
 
-    public void GuardarRegistro() {
+//    public void GuardarRegistro() {
+//
+//        try {
+//            String CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU;
+//            String key = "UTA";
+//            Conexion cn = new Conexion();
+//            Connection cc = cn.conectar();
+//
+//            String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU) "
+//                    + "values (?,?,?,?,?,?,?)";
+//            CED_USU = jtxtCedula.getText();
+//            NOM_USU = jtxtNombre.getText();
+//            APE_USU = jtxtApellido.getText();
+//
+//            FEC_USU = (((JTextField) jDateFecha.getDateEditor().getUiComponent()).getText());
+//
+//            DIR_USU = jtxtDireccion.getText();
+//
+//            TEL_USU = jtxtTelefono.getText();
+//            CON_USU = "hex(aes_encrypt('"+jpsdContraseña.getText()+"', '"+key+"'))";
+//            // DesbloquearBotones();
+//
+//            PreparedStatement psd = cc.prepareStatement(sql);
+//            psd.setString(1, CED_USU);
+//            psd.setString(2, NOM_USU);
+//            psd.setString(3, APE_USU);
+//            psd.setString(4, FEC_USU);
+//            psd.setString(5, DIR_USU);
+//            psd.setString(6, TEL_USU);
+//            psd.setString(7, CON_USU);
+//
+//            int n = psd.executeUpdate();
+//
+//            if (n > 0) {
+//                JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE");
+//
+//            }
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+    
+     public void GuardarRegistro2() {
 
         try {
-            String CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU;
-
+            String key = "UTA";
             Conexion cn = new Conexion();
             Connection cc = cn.conectar();
 
             String sql = "insert into usuario (CED_USU, NOM_USU, APE_USU, FEC_USU, DIR_USU, TEL_USU, CON_USU) "
-                    + "values (?,?,?,?,?,?,?)";
-            CED_USU = jtxtCedula.getText();
-            NOM_USU = jtxtNombre.getText();
-            APE_USU = jtxtApellido.getText();
-
-            FEC_USU = (((JTextField) jDateFecha.getDateEditor().getUiComponent()).getText());
-
-            DIR_USU = jtxtDireccion.getText();
-
-            TEL_USU = jtxtTelefono.getText();
-            CON_USU = jpsdContraseña.getText();
-            // DesbloquearBotones();
-
+                    + "values ('"+jtxtCedula.getText()+"','"+jtxtNombre.getText()+"','"+jtxtApellido.getText()+
+                    "','"+(((JTextField) jDateFecha.getDateEditor().getUiComponent()).getText())+"','"+jtxtDireccion.getText()+
+                    "','"+jtxtTelefono.getText()+"',hex(aes_encrypt('"+jpsdContraseña.getText()+"', '"+key+"')))";
             PreparedStatement psd = cc.prepareStatement(sql);
-            psd.setString(1, CED_USU);
-            psd.setString(2, NOM_USU);
-            psd.setString(3, APE_USU);
-            psd.setString(4, FEC_USU);
-            psd.setString(5, DIR_USU);
-            psd.setString(6, TEL_USU);
-            psd.setString(7, CON_USU);
 
             int n = psd.executeUpdate();
 
@@ -301,7 +328,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
         }
     }
 

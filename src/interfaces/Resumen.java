@@ -5,6 +5,7 @@
  */
 package interfaces;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -13,6 +14,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -83,7 +88,7 @@ public class Resumen extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jlblFila2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(getIconImage());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -211,6 +216,16 @@ public class Resumen extends javax.swing.JFrame {
         }
     }
 
+    private String fecha() {
+        try {
+            Date fecCadena = Date.from(Instant.now());
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-d");
+            return formato.format(fecCadena);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private void jbtnContratarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnContratarActionPerformed
         String IDE_CON, PRE_CON, CED_TRA_CON, CED_USU_CON, EST_CON;
         if (controlTamanoDatos()) {
@@ -245,7 +260,7 @@ public class Resumen extends javax.swing.JFrame {
                     psd.setString(2, PRE_CON);
                     psd.setString(3, EST_CON);
                     psd.setString(4, CAL_CON);
-                    psd.setString(5, null);
+                    psd.setString(5, fecha());
                     psd.setString(6, null);
                     psd.setString(7, CED_TRA_CON);
                     psd.setString(8, CED_USU_CON);

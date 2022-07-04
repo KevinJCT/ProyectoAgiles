@@ -158,23 +158,22 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
     public void Inicarsesion() {
         try {
-            String CED_USU, CON_USU;
+            String CED_USU;
             CED_USU = jtxtUsuario.getText();
-            CON_USU = jpsdContraseña.getText();
             Conexion cn = new Conexion();
             Connection cc = cn.conectar();
-            String sql = "SELECT CED_USU from usuario WHERE CED_USU='" + CED_USU + "'AND CON_USU='" + CON_USU + "'";
+            String sql = "SELECT * from usuario WHERE CED_USU='" + CED_USU + "'";
             cn.resultado = cn.sentencia.executeQuery(sql);
 
             if (cn.resultado.next()) {
-                //setVisible(false);
-                Busqueda b;
-                Busqueda.usuario = nombreUsu(CED_USU);
-                Busqueda.cedula = CED_USU;
-                b = new Busqueda();
-                b.setVisible(true);
-                this.dispose();
-
+                if (desEncriptar(cn.resultado.getString("CON_USU")).equals(jpsdContraseña.getText())) {
+                    Busqueda b;
+                    Busqueda.usuario = nombreUsu(CED_USU);
+                    Busqueda.cedula = CED_USU;
+                    b = new Busqueda();
+                    b.setVisible(true);
+                    this.dispose();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o Contraseña invalidos");
             }
@@ -223,7 +222,7 @@ public class Login extends javax.swing.JFrame {
 //    }
 
     private boolean controlDatosvacios() {
-        if (jtxtUsuario.getText().equals("") || jpsdContraseña.getPassword().equals("")) {
+        if (jtxtUsuario.getText().equals("") || jpsdContraseña.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "DATOS INCOMPLETOS");
             jtxtUsuario.requestFocus();
             return false;
@@ -264,6 +263,27 @@ public class Login extends javax.swing.JFrame {
             cedulaCorrecta = false;
         }
         return cedulaCorrecta;
+    }
+
+    public String desEncriptar(String clave) {
+        try {
+            String key = "UTA";
+            Conexion c = new Conexion();
+            Connection cn = c.conectar();
+            String sqlS = "SELECT aes_decrypt(unhex('" + clave + "'),'" + key + "') FROM usuario WHERE CED_USU='" + jtxtUsuario.getText() + "'";
+            Statement psd = cn.createStatement();
+            ResultSet rs = psd.executeQuery(sqlS);
+            if (rs.next()) {
+                if (rs.getString("aes_decrypt(unhex('" + clave + "'),'" + key + "')").equals(jpsdContraseña.getText())) {
+                    return rs.getString("aes_decrypt(unhex('" + clave + "'),'" + key + "')");
+                }else{
+                    JOptionPane.showMessageDialog(null, "contraseña incorrecta");
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return "";
     }
 
     /**
