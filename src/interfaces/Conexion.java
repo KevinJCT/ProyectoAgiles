@@ -25,10 +25,10 @@ public class Conexion {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost/bdagiles", "root", "");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3307/agiles", "root", "");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/metodologias", "root", "");
-            sentencia =con.createStatement();
+//          con = DriverManager.getConnection("jdbc:mysql://localhost/bdagiles", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3307/bdagiles", "root", "");
+            //con = DriverManager.getConnection("jdbc:mysql://localhost/metodologias", "root", "");
+            sentencia = con.createStatement();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }

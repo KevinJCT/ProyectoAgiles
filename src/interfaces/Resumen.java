@@ -6,6 +6,7 @@
 package interfaces;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -34,6 +35,7 @@ public class Resumen extends javax.swing.JFrame {
     int fila = Integer.parseInt(Busqueda.jlblFila.getText());
     String CED_TRA = Busqueda.jtbl1.getValueAt(fila, 0).toString();
     static String cedula;
+    int xMouse,yMouse;
 
     public Resumen() {
         initComponents();
@@ -44,13 +46,13 @@ public class Resumen extends javax.swing.JFrame {
     public int id_incrementable() {
         int id = 1;
         try {
-            System.out.println("Entro id_incremental");
+            //System.out.println("Entro id_incremental");
             Conexion cc = new Conexion();
             Connection cn = cc.conectar();
 
             String sql = "Select Max(IDE_CON) FROM registro_contrato";
             Statement psd = cn.createStatement();
-            System.out.println("Antes de rs");
+            //System.out.println("Antes de rs");
             ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {
                 id = rs.getInt(1) + 1;
@@ -73,21 +75,39 @@ public class Resumen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jpnlBackGround = new javax.swing.JPanel();
         jbtnContratar = new javax.swing.JButton();
-        jlblDato = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblTrabajador = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
+        jpnlCabecera = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jlblDato = new javax.swing.JLabel();
         jlblFila2 = new javax.swing.JLabel();
+        jpnlCerrar = new javax.swing.JPanel();
+        jlblCerrar = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
+        setLocationByPlatform(true);
+        setUndecorated(true);
+        setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("TRABAJADOR:");
+        jpnlBackGround.setBackground(new java.awt.Color(255, 255, 255));
 
         jbtnContratar.setText("Contratar");
         jbtnContratar.addActionListener(new java.awt.event.ActionListener() {
@@ -95,8 +115,6 @@ public class Resumen extends javax.swing.JFrame {
                 jbtnContratarActionPerformed(evt);
             }
         });
-
-        jlblDato.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
         jtblTrabajador.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,43 +135,110 @@ public class Resumen extends javax.swing.JFrame {
         jTextArea1.setWrapStyleWord(true);
         jScrollPane2.setViewportView(jTextArea1);
 
+        jLabel3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel3.setText("Pregunta:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jlblDato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jlblFila2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(114, 114, 114))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(186, 186, 186)
+        jpnlCabecera.setBackground(new java.awt.Color(255, 255, 255));
+        jpnlCabecera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jpnlCabeceraMouseDragged(evt);
+            }
+        });
+        jpnlCabecera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jpnlCabeceraMousePressed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel1.setText("TRABAJADOR:");
+
+        jlblDato.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+
+        jpnlCerrar.setBackground(new java.awt.Color(255, 255, 255));
+
+        jlblCerrar.setBackground(new java.awt.Color(255, 255, 255));
+        jlblCerrar.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jlblCerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlblCerrar.setText("X");
+        jlblCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlblCerrarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jlblCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jlblCerrarMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpnlCerrarLayout = new javax.swing.GroupLayout(jpnlCerrar);
+        jpnlCerrar.setLayout(jpnlCerrarLayout);
+        jpnlCerrarLayout.setHorizontalGroup(
+            jpnlCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnlCerrarLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jlblCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jpnlCerrarLayout.setVerticalGroup(
+            jpnlCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnlCerrarLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jlblCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout jpnlCabeceraLayout = new javax.swing.GroupLayout(jpnlCabecera);
+        jpnlCabecera.setLayout(jpnlCabeceraLayout);
+        jpnlCabeceraLayout.setHorizontalGroup(
+            jpnlCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnlCabeceraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlblDato, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlblFila2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jpnlCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jpnlCabeceraLayout.setVerticalGroup(
+            jpnlCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jpnlCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpnlCabeceraLayout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jpnlCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlblDato, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jlblFila2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jpnlBackGroundLayout = new javax.swing.GroupLayout(jpnlBackGround);
+        jpnlBackGround.setLayout(jpnlBackGroundLayout);
+        jpnlBackGroundLayout.setHorizontalGroup(
+            jpnlBackGroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jpnlCabecera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpnlBackGroundLayout.createSequentialGroup()
+                .addGroup(jpnlBackGroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnlBackGroundLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3))
+                    .addGroup(jpnlBackGroundLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jpnlBackGroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(jpnlBackGroundLayout.createSequentialGroup()
+                        .addGap(180, 180, 180)
                         .addComponent(jbtnContratar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jlblDato, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jlblFila2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19)
+        jpnlBackGroundLayout.setVerticalGroup(
+            jpnlBackGroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnlBackGroundLayout.createSequentialGroup()
+                .addComponent(jpnlCabecera, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
@@ -162,6 +247,17 @@ public class Resumen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnContratar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jpnlBackGround, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jpnlBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -253,6 +349,31 @@ public class Resumen extends javax.swing.JFrame {
                 this.dispose();
     }//GEN-LAST:event_jbtnContratarActionPerformed
 
+    private void jlblCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlblCerrarMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jlblCerrarMouseClicked
+
+    private void jlblCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlblCerrarMouseEntered
+        jpnlCerrar.setBackground(Color.red);
+        jlblCerrar.setForeground(Color.white);
+    }//GEN-LAST:event_jlblCerrarMouseEntered
+
+    private void jlblCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlblCerrarMouseExited
+        jpnlCerrar.setBackground(Color.white);
+        jlblCerrar.setForeground(Color.black);
+    }//GEN-LAST:event_jlblCerrarMouseExited
+
+    private void jpnlCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnlCabeceraMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_jpnlCabeceraMousePressed
+
+    private void jpnlCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnlCabeceraMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_jpnlCabeceraMouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -291,12 +412,17 @@ public class Resumen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbtnContratar;
+    private javax.swing.JLabel jlblCerrar;
     public static javax.swing.JLabel jlblDato;
     public static javax.swing.JLabel jlblFila2;
+    private javax.swing.JPanel jpnlBackGround;
+    private javax.swing.JPanel jpnlCabecera;
+    private javax.swing.JPanel jpnlCerrar;
     private javax.swing.JTable jtblTrabajador;
     // End of variables declaration//GEN-END:variables
 }
